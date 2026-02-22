@@ -1,7 +1,11 @@
-import type { Tratamiento } from "../types/index";
+import type { Servicio} from "../types/index";
 
 
-export const servicios: Tratamiento[]  = [
-    {nombre:'Relajante', grupo:'Terapeuticos', duracion:0, enabled:false}
+export const servicios: Servicio[]  = [
+    {
+        name: 'Relajante', group: 'Terapeuticos', duration: 0, enabled: false,
+        handle: "",
+        price: 0
+    }
 
 ]

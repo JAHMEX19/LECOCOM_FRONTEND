@@ -1,8 +1,8 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import NavigationTabs from "../components/NavigationsTabs";
-import AdminView from "../views/AdminView"; 
 import { Toaster } from "sonner";
 import type { User } from "../types";
+import FormServices from "../components/FormServices";
 
 type UserProfileViewProps = {
   data: User;
@@ -12,6 +12,8 @@ export default function UserProfileView({ data }: UserProfileViewProps) {
   const location = useLocation();
 
   return (
+
+    // CONTENEDOR PRINCIPAL
     <div className="min-h-screen bg-[#FDFBF9] font-sans selection:bg-[#2897A3]/10 flex flex-col">
       {/* HEADER */}
       <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100">
@@ -73,7 +75,7 @@ export default function UserProfileView({ data }: UserProfileViewProps) {
             {location.pathname.includes('profile') ? (
               <Outlet />
             ) : data.admin ? (
-              <AdminView />
+              <FormServices />
             ) : (
               <Outlet />
             )}

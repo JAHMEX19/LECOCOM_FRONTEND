@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../api/LeCocomApi";
 import { Navigate } from "react-router-dom";
 import LoadingHeader from "../components/LoadingHeader";
-import UserProfileView from "../components/UserProfileView";
+import UserProfileView from "../views/UserProfileView";
 
-export default function AppLayout() {
+export default function ClientLayout() {
 
   // Aquí es donde decidimos qué mostrar según el estado de la consulta del usuario
   const { data, isLoading, isError } = useQuery({

@@ -1,14 +1,17 @@
 import { useForm } from "react-hook-form";
-import ErrorMessage from "../components/ErrorMessage";
+import ErrorMessage from "./ErrorMessage";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import type { User, UserProfileFormData } from "../types";
 import { updateProfile, upLoadImage } from "../api/LeCocomApi";
 import { toast } from "sonner";
 
-export default function ProfileView() {
+export default function FormProfileView() {
+  
+  //1. Obtener los datos del usuario desde el cache de React Query
   const queryClient = useQueryClient();
   const data: User = queryClient.getQueryData(["user"])!;
 
+  //2. Configurar React Hook Form con los datos del usuario
   const {
     register,
     handleSubmit,

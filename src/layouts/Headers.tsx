@@ -4,6 +4,8 @@ import {Toaster} from 'sonner'
 
 
 export default function Header() {
+
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -39,7 +41,7 @@ export default function Header() {
             <nav className="hidden md:flex items-center gap-10">
               <Link to="/" className={linkStyle('/')}>Inicio</Link>
               <Link to="/nosotros" className={linkStyle('/nosotros')}>Nosotros</Link>
-              <Link to="/tratamientos" className={linkStyle('/tratamientos')}>Tratamientos</Link>
+              <Link to="/servicios" className={linkStyle('/servicios')}>Servicios</Link>
               
               <Link 
                 to="/agenda" 

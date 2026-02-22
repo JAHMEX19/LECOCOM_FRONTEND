@@ -1,145 +1,159 @@
-import { Switch, Button } from "@headlessui/react";
-import { PlusIcon, TrashIcon } from "@heroicons/react/20/solid";
-import type { Tratamiento } from "../types";
-import { classNames } from "../utils";
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Switch } from "@headlessui/react";
+import { TrashIcon, PencilSquareIcon, CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { toast } from "sonner";
+import type { Servicio } from "../types";
+import { deleteServicio, updateServicio } from "../api/LeCocomApi";
 
 type ServiciosInputProps = {
-  item?: Tratamiento
-  handleAddServicio?: (e:React.ChangeEvent<HTMLInputElement>) => void
+  item: Servicio;
 };
 
-// --- Estilos Reutilizables para mantener consistencia ---
-const labelStyle =
-  "text-[10px] uppercase tracking-[0.2em] text-stone-500 font-semibold ml-1";
-const inputStyle =
-  "w-full bg-white border border-stone-100 p-4 rounded-2xl text-xs text-stone-600 focus:ring-1 focus:ring-[#2897A3] focus:border-[#2897A3] outline-none transition-all shadow-sm placeholder:text-stone-300";
+export default function ServiciosInput({ item }: ServiciosInputProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const queryClient = useQueryClient();
 
-export default function ServiciosInput({ item ,handleAddServicio}: ServiciosInputProps) {
+  const { register, handleSubmit, reset, control } = useForm<Servicio>({
+    defaultValues: item
+  });
+
+  // Mutación de actualización
+  const { mutate: mutateUpdate, isPending: isUpdating } = useMutation({
+    mutationFn: updateServicio,
+    onSuccess: () => {
+      toast.success("Servicio actualizado");
+      queryClient.invalidateQueries({ queryKey: ["servicios"] });
+      setIsEditing(false);
+    },
+    onError: (error) => toast.error(error.message)
+  });
+
+  // Mutación de eliminación
+  const { mutate: mutateDelete } = useMutation({
+    mutationFn: deleteServicio,
+    onSuccess: () => {
+      toast.success("Servicio eliminado");
+      queryClient.invalidateQueries({ queryKey: ["servicios"] });
+    },
+    onError: (error) => toast.error(error.message)
+  });
+
+  const onSubmit = (data: Servicio) => mutateUpdate(data);
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    reset(); // Revierte a los valores originales (item)
+  };
+
+  const inputEditStyle = "w-full bg-stone-50 border border-stone-200 px-3 py-2 rounded-xl text-xs text-stone-600 focus:ring-1 focus:ring-[#2897A3] outline-none transition-all disabled:opacity-50";
+
   return (
-    <div className="flex flex-col space-y-8">
-      {/* 1. FORMULARIO DE NUEVO SERVICIO (Creación) */}
-      <section>
-        <h3 className="text-xs font-bold text-stone-400 mb-4 ml-2 uppercase tracking-widest">
-          Agregar Nuevo
-        </h3>
-        <form className="bg-[#FDFBF9] border-2 border-dashed border-stone-200 p-8 rounded-[2.5rem] transition-all hover:border-[#B5A447]/30 group">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
-            <div className="md:col-span-5 flex flex-col space-y-3">
-              <label className={labelStyle}>Nombre del Servicio</label>
-              <input
-                type="text"
-                placeholder="Ej. Masaje con Piedras Volcánicas"
-                className={inputStyle}
-                value={item?.nombre || ""}
-                onChange={handleAddServicio}
-                name={item?.nombre}
+    <div className={`bg-white border transition-all duration-300 p-5 rounded-[2rem] shadow-sm mb-4 ${
+      isEditing ? 'border-[#2897A3] ring-1 ring-[#2897A3]/10 shadow-lg' : 'border-stone-100 hover:border-stone-200'
+    }`}>
+      
+      {isEditing ? (
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            {/* Campos de Input */}
+            <div>
+              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Nombre</label>
+              <input {...register("name", { required: true })} className={inputEditStyle} disabled={isUpdating} />
+            </div>
+            <div>
+              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Minutos</label>
+              <input type="number" {...register("duration", { valueAsNumber: true })} className={inputEditStyle} disabled={isUpdating} />
+            </div>
+            <div>
+              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Precio ($)</label>
+              <input type="number" {...register("price", { valueAsNumber: true })} className={inputEditStyle} disabled={isUpdating} />
+            </div>
+
+            {/* Switch de Visibilidad */}
+            <div className="flex flex-col items-center justify-center bg-stone-50 p-2 rounded-xl border border-stone-100">
+              <label className="text-[8px] uppercase text-stone-400 font-bold mb-2">Visible</label>
+              <Controller
+                name="enabled"
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    checked={field.value}
+                    onChange={field.onChange}
+                    className={`${field.value ? "bg-[#2897A3]" : "bg-stone-200"} relative inline-flex h-5 w-10 items-center rounded-full transition-colors outline-none`}
+                  >
+                    <span className={`${field.value ? "translate-x-6" : "translate-x-1"} inline-block h-3 w-3 transform rounded-full bg-white transition-transform`} />
+                  </Switch>
+                )}
               />
-            </div>
-
-            <div className="md:col-span-3 flex flex-col space-y-3">
-              <label className={labelStyle}>Categoría</label>
-              <select className={`${inputStyle} appearance-none`}>
-                <option value="">Seleccionar...</option>
-                <option value="masajes">Masajes</option>
-                <option value="faciales">Faciales</option>
-                <option value="corporales">Corporales</option>
-              </select>
-            </div>
-
-            <div className="md:col-span-2 flex flex-col space-y-3">
-              <label className={labelStyle}>Duración</label>
-              <div className="relative">
-                <input type="number" placeholder="60" className={inputStyle} />
-                <span className="absolute right-4 top-4 text-[10px] text-stone-300 font-bold">
-                  MIN
-                </span>
-              </div>
-            </div>
-
-            <div className="md:col-span-2">
-              <Button
-                type="submit"
-                className="w-full bg-[#B5A447] hover:bg-[#2897A3] text-white h-[40px] rounded-2xl flex items-center justify-center transition-all duration-500 shadow-lg shadow-[#B5A447]/20 group-hover:shadow-[#2897A3]/20"
-              >
-                <PlusIcon className="h-6 w-6" />
-              </Button>
             </div>
           </div>
+
+          {/* Botones de acción */}
+          <div className="flex justify-end gap-2 pt-2 border-t border-stone-50">
+            <button 
+              type="button" 
+              onClick={handleCancel} 
+              className="px-4 py-2 rounded-xl bg-stone-100 text-stone-500 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 hover:bg-stone-200 transition-colors"
+            >
+              <XMarkIcon className="h-4 w-4"/> Cancelar
+            </button>
+            <button 
+              type="submit" 
+              disabled={isUpdating}
+              className="px-6 py-2 rounded-xl bg-[#2897A3] text-white text-[10px] font-bold uppercase flex items-center gap-2 hover:bg-[#1e737c] transition-colors shadow-sm"
+            >
+              <CheckIcon className="h-4 w-4" /> {isUpdating ? 'Guardando...' : 'Guardar'}
+            </button>
+          </div>
         </form>
-      </section>
+      ) : (
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          {/* Vista Normal */}
+          <div className="flex-1 min-w-[200px]">
+            <p className="text-[9px] uppercase tracking-[0.2em] text-[#2897A3] font-bold mb-0.5">{item.group}</p>
+            <h4 className="text-sm font-bold text-stone-700 leading-tight">{item.name}</h4>
+          </div>
 
-      {/* 2. FORMULARIO DE EDICIÓN (Item de Lista) */}
-      <section>
-        <h3 className="text-xs font-bold text-stone-400 mb-4 ml-2 uppercase tracking-widest">
-          Servicio Existente
-        </h3>
-        <div className="bg-white border border-stone-100 p-6 rounded-3xl shadow-sm transition-hover duration-300 hover:bg-stone-50/50">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-            {/*/ --- Campos Prellenados con Datos del Servicio (Edición) ---  /*/}
-            <div className="md:col-span-4 flex flex-col space-y-2">
-              <label className="text-[9px] uppercase tracking-[0.2em] text-stone-400 ml-1">
-                Nombre
-              </label>
-              <input
-                type="text"
-                defaultValue={item?.nombre}
-                className="bg-white border border-stone-100 p-3 rounded-xl text-xs text-stone-600 focus:ring-1 focus:ring-[#2897A3] outline-none"
-              />
+          <div className="flex items-center gap-6 md:gap-10">
+            <div className="text-center">
+              <p className="text-[8px] uppercase text-stone-400 font-bold mb-0.5">Duración</p>
+              <p className="text-xs text-stone-600 font-bold">{item.duration} min</p>
+            </div>
+            <div className="text-center">
+              <p className="text-[8px] uppercase text-stone-400 font-bold mb-0.5">Precio</p>
+              <p className="text-xs text-stone-600 font-bold">${item.price}</p>
             </div>
 
-            <div className="md:col-span-3 flex flex-col space-y-2">
-              <label className="text-[9px] uppercase tracking-[0.2em] text-stone-400 ml-1">
-                Categoría
-              </label>
-              <input
-                type="text"
-                defaultValue={item?.grupo}
-                className="bg-white border border-stone-100 p-3 rounded-xl text-xs text-stone-600 focus:ring-1 focus:ring-[#2897A3] outline-none"
-              />
-            </div>
-
-            <div className="md:col-span-2 flex flex-col space-y-2">
-              <label className="text-[9px] uppercase tracking-[0.2em] text-stone-400 ml-1">
-                Duración
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  defaultValue={item?.duracion}
-                  className="w-full bg-white border border-stone-100 p-3 rounded-xl text-xs text-stone-600"
-                />
-                <span className="absolute right-3 top-3 text-[10px] text-stone-300">
-                  min
-                </span>
+            {/* Indicador de Visibilidad */}
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-[8px] uppercase text-stone-300 font-bold">Visible</span>
+              <div className={`${item.enabled ? "bg-[#2897A3]" : "bg-stone-200"} relative inline-flex h-5 w-10 items-center rounded-full opacity-80 transition-colors`}>
+                <span className={`${item.enabled ? "translate-x-6" : "translate-x-1"} inline-block h-3 w-3 transform rounded-full bg-white transition-transform`} />
               </div>
             </div>
 
-            <div className="md:col-span-3 flex items-center justify-end gap-6">
-              <Switch
-                checked={item?.enabled}
-                onChange={() => {}}
-                className={classNames(
-                  item?.enabled ? "bg-blue-500" : "bg-gray-200",
-                  "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-                )}
+            {/* Acciones */}
+            <div className="flex items-center gap-2 border-l border-stone-100 pl-4">
+              <button 
+                onClick={() => setIsEditing(true)} 
+                className="p-2.5 rounded-xl bg-stone-50 text-stone-300 hover:text-[#B5A447] hover:bg-[#B5A447]/5 transition-all"
+                title="Editar"
               >
-                <span
-                  aria-hidden="true"
-                  className={classNames(
-                    item?.enabled ? "translate-x-5" : "translate-x-0",
-                    "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
-                  )}
-                />
-              </Switch>
-
-              <Button onChange={() => {}} className="p-3 rounded-xl bg-stone-50 text-stone-400 hover:text-red-500 hover:bg-red-50 transition-all">
-                
+                <PencilSquareIcon className="h-5 w-5" />
+              </button>
+              <button 
+                onClick={() => confirm(`¿Eliminar definitivamente "${item.name}"?`) && mutateDelete(item.handle)} 
+                className="p-2.5 rounded-xl bg-stone-50 text-stone-300 hover:text-red-500 hover:bg-red-50 transition-all"
+                title="Eliminar"
+              >
                 <TrashIcon className="h-5 w-5" />
-              </Button>
+              </button>
             </div>
           </div>
         </div>
-      </section>
+      )}
     </div>
   );
 }

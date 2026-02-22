@@ -3,13 +3,14 @@ import LoginView from './views/LoginView';
 import HomeView from './views/HomeView';
 import RegisterView from './views/RegisterView';
 import AboutView from './views/AboutView';
-import TreatmentsView from './views/TreatmentsView';
 import AppointmentsView from './views/AppointmentsView';
 import Headers from './layouts/Headers';
-import ProfileView from './views/ProfileView';
+
 import ClientLayout from './layouts/ClientLayout';
-import WellnessView from './views/WellnessView';
-import AdminView from './views/AdminView';
+import WellnessView from './components/WellnessView';
+import AdminView from './components/FormServices';
+import ServiciosView from './views/ServiciosView';
+import FormProfileView from './components/FormProfileView';
 
 
 export default function Router() {
@@ -19,7 +20,7 @@ export default function Router() {
         <Route element={<Headers/>}>
             <Route path="/" element={<HomeView/>} />
             <Route path="/nosotros" element={<AboutView/>} />
-            <Route path="/tratamientos" element={<TreatmentsView/>} />
+            <Route path="/servicios" element={<ServiciosView/>} />
             <Route path="/agenda" element={<AppointmentsView/>} />
         </Route>      
         <Route element={<Headers/>}>
@@ -28,9 +29,9 @@ export default function Router() {
         </Route>
 
         <Route element={<ClientLayout/>}>
-            <Route path="/user/profile" element={<ProfileView/>} />
+            <Route path="/user/profile" element={<FormProfileView/>} />
             <Route path="/user/wellness" element={<WellnessView/>} />
-            <Route path="/admin" element={<AdminView/>} />
+            <Route path="/user/admin/servicios" element={<AdminView/>} />
         </Route>
 
       </Routes>

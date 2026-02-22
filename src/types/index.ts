@@ -24,11 +24,13 @@ export type UserProfileFormData = Pick<User, 'name' | 'descripcion'|'handle' | '
 
 
 export type ServiciosDataBase = {
-    id:number,
-    nombre:string;
-    grupo:string;
-    duracion:number;
+    handle:string;
+    name:string;
+    group:string;
+    duration:number;
+    price:number;
     enabled:boolean;
+
 }
 
-export type Tratamiento = Pick<ServiciosDataBase, 'nombre' | 'grupo' | 'duracion' | 'enabled'> 
+export type Servicio = Pick<ServiciosDataBase, 'handle' | 'name' | 'group' | 'duration' | 'price' | 'enabled'> 

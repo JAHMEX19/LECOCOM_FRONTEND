@@ -9,7 +9,7 @@ const userTabs = [
 
 // Pestañas para Administradores
 const adminTabs = [
-  { name: "Servicios", href: "/admin", icon: SparklesIcon},
+  { name: "Servicios", href: "/user/admin/servicios", icon: SparklesIcon},
   //{ name: "Gestión Citas", href: "/admin/citas", icon: CalendarIcon },
   { name: "Mi Perfil", href: "/user/profile", icon: UserIcon },
 ];
