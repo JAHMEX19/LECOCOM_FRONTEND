@@ -1,4 +1,4 @@
-import { BanknotesIcon, ClockIcon, SparklesIcon } from "@heroicons/react/16/solid";
+import { ClockIcon, SparklesIcon } from "@heroicons/react/16/solid";
 import type { Servicio } from "../types";
 
 
@@ -19,7 +19,7 @@ export default function ServiceCard({ servicio }: { servicio: Servicio }) {
           {servicio.name}
         </h3>
         <p className="text-sm text-stone-500 leading-relaxed font-light">
-          Sumérgete en una experiencia diseñada para revitalizar tu cuerpo y alma en nuestra cabina de relajación.
+          {servicio.description || "Una experiencia única diseñada para tu bienestar y relajación." }
         </p>
       </div>
 
@@ -30,10 +30,10 @@ export default function ServiceCard({ servicio }: { servicio: Servicio }) {
             <ClockIcon className="h-4 w-4 mr-1" />
             <span className="text-[11px] font-bold">{servicio.duration} min</span>
           </div>
-          <div className="flex items-center text-stone-600">
+          {/*<div className="flex items-center text-stone-600">
             <BanknotesIcon className="h-4 w-4 mr-1 text-[#2897A3]" />
             <span className="text-sm font-bold">${servicio.price}</span>
-          </div>
+          </div>*/}
         </div>
 
         <button className="text-[10px] uppercase tracking-widest font-bold text-[#B5A447] hover:text-[#2897A3] transition-colors">

@@ -55,13 +55,14 @@ export default function UserProfileView({ data }: UserProfileViewProps) {
         <div className="flex justify-end mb-8">
           <Link
             className="text-[11px] uppercase tracking-[0.2em] text-[#B5A447] hover:text-[#2897A3] font-bold transition-colors flex items-center gap-2"
-            to={`/${data.handle}`}
+            to={`/servicios`}
             target="_blank"
             rel="noreferrer noopener"
           >
             <span className="w-8 h-[1px] bg-[#B5A447]/30"></span>
             Ver Perfil Público
           </Link>
+          
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">

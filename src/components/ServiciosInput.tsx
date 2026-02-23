@@ -19,7 +19,6 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
     defaultValues: item
   });
 
-  // Mutación de actualización
   const { mutate: mutateUpdate, isPending: isUpdating } = useMutation({
     mutationFn: updateServicio,
     onSuccess: () => {
@@ -30,7 +29,6 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
     onError: (error) => toast.error(error.message)
   });
 
-  // Mutación de eliminación
   const { mutate: mutateDelete } = useMutation({
     mutationFn: deleteServicio,
     onSuccess: () => {
@@ -44,7 +42,7 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
 
   const handleCancel = () => {
     setIsEditing(false);
-    reset(); // Revierte a los valores originales (item)
+    reset();
   };
 
   const inputEditStyle = "w-full bg-stone-50 border border-stone-200 px-3 py-2 rounded-xl text-xs text-stone-600 focus:ring-1 focus:ring-[#2897A3] outline-none transition-all disabled:opacity-50";
@@ -55,20 +53,24 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
     }`}>
       
       {isEditing ? (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-            {/* Campos de Input */}
-            <div>
-              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Nombre</label>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+            {/* Nombre */}
+            <div className="md:col-span-2">
+              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Nombre del Servicio</label>
               <input {...register("name", { required: true })} className={inputEditStyle} disabled={isUpdating} />
             </div>
-            <div>
-              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Minutos</label>
-              <input type="number" {...register("duration", { valueAsNumber: true })} className={inputEditStyle} disabled={isUpdating} />
-            </div>
-            <div>
-              <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Precio ($)</label>
-              <input type="number" {...register("price", { valueAsNumber: true })} className={inputEditStyle} disabled={isUpdating} />
+
+            {/* Minutos y Precio */}
+            <div className="grid grid-cols-2 gap-2 md:col-span-1">
+              <div>
+                <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Minutos</label>
+                <input type="number" {...register("duration", { valueAsNumber: true })} className={inputEditStyle} disabled={isUpdating} />
+              </div>
+              <div>
+                <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Precio ($)</label>
+                <input type="number" {...register("price", { valueAsNumber: true })} className={inputEditStyle} disabled={isUpdating} />
+              </div>
             </div>
 
             {/* Switch de Visibilidad */}
@@ -90,30 +92,37 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
             </div>
           </div>
 
+          {/* NUEVO CAMPO: Descripción */}
+          <div>
+            <label className="text-[8px] uppercase text-stone-400 font-bold ml-1 mb-1 block">Descripción del Servicio</label>
+            <textarea 
+              {...register("description")} 
+              rows={2}
+              placeholder="Ej: Masaje relajante con aceites esenciales..."
+              className={`${inputEditStyle} resize-none`} 
+              disabled={isUpdating} 
+            />
+          </div>
+
           {/* Botones de acción */}
           <div className="flex justify-end gap-2 pt-2 border-t border-stone-50">
-            <button 
-              type="button" 
-              onClick={handleCancel} 
-              className="px-4 py-2 rounded-xl bg-stone-100 text-stone-500 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 hover:bg-stone-200 transition-colors"
-            >
+            <button type="button" onClick={handleCancel} className="px-4 py-2 rounded-xl bg-stone-100 text-stone-500 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 hover:bg-stone-200 transition-colors">
               <XMarkIcon className="h-4 w-4"/> Cancelar
             </button>
-            <button 
-              type="submit" 
-              disabled={isUpdating}
-              className="px-6 py-2 rounded-xl bg-[#2897A3] text-white text-[10px] font-bold uppercase flex items-center gap-2 hover:bg-[#1e737c] transition-colors shadow-sm"
-            >
+            <button type="submit" disabled={isUpdating} className="px-6 py-2 rounded-xl bg-[#2897A3] text-white text-[10px] font-bold uppercase flex items-center gap-2 hover:bg-[#1e737c] transition-colors shadow-sm">
               <CheckIcon className="h-4 w-4" /> {isUpdating ? 'Guardando...' : 'Guardar'}
             </button>
           </div>
         </form>
       ) : (
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          {/* Vista Normal */}
           <div className="flex-1 min-w-[200px]">
             <p className="text-[9px] uppercase tracking-[0.2em] text-[#2897A3] font-bold mb-0.5">{item.group}</p>
             <h4 className="text-sm font-bold text-stone-700 leading-tight">{item.name}</h4>
+            {/* Visualización de la descripción */}
+            {item.description && (
+              <p className="text-xs text-stone-400 mt-1 line-clamp-1 italic">{item.description}</p>
+            )}
           </div>
 
           <div className="flex items-center gap-6 md:gap-10">
@@ -126,7 +135,6 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
               <p className="text-xs text-stone-600 font-bold">${item.price}</p>
             </div>
 
-            {/* Indicador de Visibilidad */}
             <div className="flex flex-col items-center gap-1">
               <span className="text-[8px] uppercase text-stone-300 font-bold">Visible</span>
               <div className={`${item.enabled ? "bg-[#2897A3]" : "bg-stone-200"} relative inline-flex h-5 w-10 items-center rounded-full opacity-80 transition-colors`}>
@@ -134,20 +142,11 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
               </div>
             </div>
 
-            {/* Acciones */}
             <div className="flex items-center gap-2 border-l border-stone-100 pl-4">
-              <button 
-                onClick={() => setIsEditing(true)} 
-                className="p-2.5 rounded-xl bg-stone-50 text-stone-300 hover:text-[#B5A447] hover:bg-[#B5A447]/5 transition-all"
-                title="Editar"
-              >
+              <button onClick={() => setIsEditing(true)} className="p-2.5 rounded-xl bg-stone-50 text-stone-300 hover:text-[#B5A447] hover:bg-[#B5A447]/5 transition-all">
                 <PencilSquareIcon className="h-5 w-5" />
               </button>
-              <button 
-                onClick={() => confirm(`¿Eliminar definitivamente "${item.name}"?`) && mutateDelete(item.handle)} 
-                className="p-2.5 rounded-xl bg-stone-50 text-stone-300 hover:text-red-500 hover:bg-red-50 transition-all"
-                title="Eliminar"
-              >
+              <button onClick={() => confirm(`¿Eliminar definitivamente "${item.name}"?`) && mutateDelete(item.handle)} className="p-2.5 rounded-xl bg-stone-50 text-stone-300 hover:text-red-500 hover:bg-red-50 transition-all">
                 <TrashIcon className="h-5 w-5" />
               </button>
             </div>

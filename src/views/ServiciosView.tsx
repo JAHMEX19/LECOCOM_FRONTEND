@@ -38,6 +38,11 @@ export default function ServiciosView() {
         <h1 className="text-4xl font-light text-stone-800 tracking-tight">
           Nuestra <span className="font-serif italic text-[#2897A3]">Selección</span>
         </h1>
+        <div className="inline-block px-6 py-2 border border-white/40 rounded-full backdrop-blur-md">
+            <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-[#2897A3] font-medium">
+              Bienvenido al Santuario
+            </p>
+          </div>
         <div className="mt-4 w-12 h-[1px] bg-stone-300 mx-auto"></div>
       </header>
 
@@ -59,7 +64,7 @@ export default function ServiciosView() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {serviciosFiltrados.map((servicio) => (
-          <ServiceCard key={servicio.handle} servicio={servicio} />
+          <ServiceCard key={servicio.handle} servicio={servicio}  />
         ))}
       </div>
     </div>

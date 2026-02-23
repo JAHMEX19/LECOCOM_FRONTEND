@@ -94,20 +94,44 @@ export default function Header() {
       </main>
      
       {/* FOOTER */}
-      <footer className="py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 border-t border-stone-100 pt-8">
-          <p className="text-stone-400 text-[10px] tracking-[0.4em] uppercase order-2 md:order-1">
-            © 2026 Le Cocom Spa - Todos los derechos reservados.
-          </p>
-          <div className="flex gap-6 order-1 md:order-2">
-              <a href="http://www.facebook.com/lecocomspa"> <img src="/icon_facebook.svg" alt="Logo" className="h-10 w-auto" /></a>
-              <a href="http:///www.instagram.com/lecocomspa"> <img src="/icon_instagram.svg" alt="Logo" className="h-10 w-auto" /></a>
-              <a href="http://"> <img src="/icon_whatsapp.svg" alt="Logo" className="h-10 w-auto" /></a>
-          </div>
-          <div className="flex gap-6 order-1 md:order-2">
-              <Link to="/user/login" className={linkStyle('/')}><img src="/icon_user.svg" alt="Logo" className="h-10 w-auto" /></Link>
-             
-              
+     {/* FOOTER: Estilo Minimalista y Accesible */}
+      <footer className="py-20 px-6 bg-[#FCFAF8]">
+        <div className="max-w-7xl mx-auto border-t border-stone-200 pt-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-10">
+            
+            {/* IZQUIERDA: Copyright y Crédito */}
+            <div className="flex flex-col items-center md:items-start gap-3 order-3 md:order-1">
+              <p className="text-stone-400 text-[10px] tracking-[0.4em] uppercase">
+                © 2026 Le Cocom Spa — Todos los derechos reservados.
+              </p>
+              <p className="text-stone-300 text-[9px] tracking-[0.3em] uppercase italic">
+                Powered by <span className="text-stone-400 font-medium">Magnus MT</span>
+              </p>
+            </div>
+
+            {/* CENTRO: Redes Sociales (Iconos grandes para fácil clic) */}
+            <div className="flex items-center gap-8 order-1 md:order-2">
+              <a href="http://www.facebook.com/lecocomspa" className="hover:opacity-70 transition-opacity">
+                <img src="/icon_facebook.svg" alt="Facebook" className="h-10 w-auto" />
+              </a>
+              <a href="http://www.instagram.com/lecocomspa" className="hover:opacity-70 transition-opacity">
+                <img src="/icon_instagram.svg" alt="Instagram" className="h-10 w-auto" />
+              </a>
+              <a href="https://wa.me/tu-numero" className="hover:opacity-70 transition-opacity">
+                <img src="/icon_whatsapp.svg" alt="WhatsApp" className="h-10 w-auto" />
+              </a>
+            </div>
+
+            {/* DERECHA: Acceso de Usuario */}
+            <div className="flex items-center order-2 md:order-3">
+              <Link 
+                to="/user/login" 
+                className="p-2 border border-transparent hover:border-stone-100 rounded-full transition-all"
+              >
+                <img src="/icon_user.svg" alt="Login" className="h-10 w-auto" />
+              </Link>
+            </div>
+
           </div>
         </div>
       </footer>

@@ -30,7 +30,8 @@ export type ServiciosDataBase = {
     duration:number;
     price:number;
     enabled:boolean;
+    description?:string;
 
 }
 
-export type Servicio = Pick<ServiciosDataBase, 'handle' | 'name' | 'group' | 'duration' | 'price' | 'enabled'> 
+export type Servicio = Pick<ServiciosDataBase, 'handle' | 'name' | 'group' | 'duration' | 'price' | 'enabled' | 'description'>; 
