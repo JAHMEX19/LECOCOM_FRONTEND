@@ -1,45 +1,48 @@
-import { ClockIcon, SparklesIcon } from "@heroicons/react/16/solid";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import type { Servicio } from "../types";
 
+export default function ServiceCard({ servicio, onClick }: { servicio: Servicio, onClick: () => void }) {
+  const imageUrl = servicio.image || "https://images.unsplash.com/photo-1544161515-4508f5ad4c24?q=80&w=1000";
 
-export default function ServiceCard({ servicio }: { servicio: Servicio }) {
   return (
-    <div className="group relative bg-white border border-stone-100 p-8 rounded-[2.5rem] transition-all duration-500 hover:shadow-2xl hover:shadow-stone-200/50 hover:-translate-y-2 flex flex-col h-full">
-      
-      {/* Icono decorativo según categoría */}
-      <div className="mb-6 w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center text-[#2897A3] group-hover:bg-[#2897A3] group-hover:text-white transition-colors duration-500">
-        <SparklesIcon className="h-6 w-6" />
+    <div 
+      onClick={onClick}
+      className="group relative cursor-pointer rounded-[3rem] transition-all duration-700 hover:shadow-2xl hover:shadow-[#2897A3]/40 hover:-translate-y-2 flex flex-col h-full overflow-hidden bg-stone-900 border border-stone-800"
+    >
+      {/* Imagen de fondo con opacidad baja para resaltar el texto */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={imageUrl} 
+          alt={servicio.name}
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-50 group-hover:opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/30 to-transparent" />
       </div>
 
-      <div className="flex-1">
-        <p className="text-[9px] uppercase tracking-[0.2em] text-[#B5A447] font-bold mb-2">
-          {servicio.group}
-        </p>
-        <h3 className="text-xl font-bold text-stone-800 mb-3 group-hover:text-[#2897A3] transition-colors">
+      {/* Contenido: Alineado abajo para tarjetas grandes */}
+      <div className="relative z-10 flex-1 flex flex-col p-8 md:p-10 justify-end">
+        
+        <div className="mb-4">
+          <span className="text-[10px] uppercase tracking-[0.5em] text-[#D4C363] font-black">
+            {servicio.group}
+          </span>
+        </div>
+        
+        <h3 className="text-2xl md:text-3xl lg:text-4xl font-light text-white tracking-tighter leading-none mb-6 group-hover:text-[#2897A3] transition-colors duration-500 line-clamp-2">
           {servicio.name}
         </h3>
-        <p className="text-sm text-stone-500 leading-relaxed font-light">
-          {servicio.description || "Una experiencia única diseñada para tu bienestar y relajación." }
-        </p>
-      </div>
 
-      {/* Footer de la tarjeta con info técnica */}
-      <div className="mt-8 pt-6 border-t border-stone-50 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center text-stone-400">
-            <ClockIcon className="h-4 w-4 mr-1" />
-            <span className="text-[11px] font-bold">{servicio.duration} min</span>
+        <div className="pt-6 border-t border-white/10 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-[10px] tracking-[0.3em] font-bold text-white/30 uppercase mb-1">Ritual</span>
+            <span className="text-sm font-medium text-white/70">{servicio.duration} Min</span>
           </div>
-          {/*<div className="flex items-center text-stone-600">
-            <BanknotesIcon className="h-4 w-4 mr-1 text-[#2897A3]" />
-            <span className="text-sm font-bold">${servicio.price}</span>
-          </div>*/}
+          
+          <div className="h-14 w-14 rounded-full border border-white/20 flex items-center justify-center bg-white/5 backdrop-blur-md transition-all duration-700 group-hover:bg-[#2897A3] group-hover:rotate-90">
+            <PlusIcon className="h-7 w-7 text-white" />
+          </div>
         </div>
-
-        <button className="text-[10px] uppercase tracking-widest font-bold text-[#B5A447] hover:text-[#2897A3] transition-colors">
-          Reservar →
-        </button>
       </div>
     </div>
-  )
+  );
 }

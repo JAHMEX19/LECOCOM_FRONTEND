@@ -11,6 +11,7 @@ import WellnessView from './components/WellnessView';
 import AdminView from './components/FormServices';
 import ServiciosView from './views/ServiciosView';
 import FormProfileView from './components/FormProfileView';
+import PromotionsView from './views/PromotionsView';
 
 
 export default function Router() {
@@ -21,17 +22,21 @@ export default function Router() {
             <Route path="/" element={<HomeView/>} />
             <Route path="/nosotros" element={<AboutView/>} />
             <Route path="/servicios" element={<ServiciosView/>} />
+            <Route path="/promociones" element={<PromotionsView/>} />
             <Route path="/agenda" element={<AppointmentsView/>} />
         </Route>      
-        <Route element={<Headers/>}>
-            <Route path="/user/login" element={<LoginView />} />
-            <Route path="/user/register" element={<RegisterView />} />
-        </Route>
 
-        <Route element={<ClientLayout/>}>
-            <Route path="/user/profile" element={<FormProfileView/>} />
-            <Route path="/user/wellness" element={<WellnessView/>} />
-            <Route path="/user/admin/servicios" element={<AdminView/>} />
+        {/* Grupo de rutas de Usuario Invitado */}
+          <Route path="/user">
+            <Route path="login" element={<LoginView />} />
+            <Route path="register" element={<RegisterView />} />
+          </Route>   
+
+        <Route path="/auth" element={<ClientLayout />}>
+          <Route path="profile" element={<FormProfileView />} />
+          <Route path="wellness" element={<WellnessView />} />
+          <Route path="admin/servicios" element={<AdminView />} />
+          <Route path="admin/promociones" element={<AdminView />} />
         </Route>
 
       </Routes>

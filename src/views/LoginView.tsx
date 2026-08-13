@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
@@ -7,58 +7,75 @@ import type { LoginFormData } from "../types/index";
 import api from "../config/axios";
 
 export default function LoginView() {
-  
-  const initalValues : LoginFormData = {
+  const navigate = useNavigate();
+
+  const initalValues: LoginFormData = {
     email: "",
     password: "",
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: initalValues });
 
-  const {register,handleSubmit, formState: { errors },} = useForm({ defaultValues: initalValues });
-
-  const handleLogin = async(formData : LoginFormData) => {
-    // Lógica de inicio de sesión aquí
-     try {
-      const {data} = await api.post(`/user/login`, formData);
-      localStorage.setItem('AUTH_TOKEN', data);
+  const handleLogin = async (formData: LoginFormData) => {
+    try {
+      const { data } = await api.post(`/user/login`, formData);
+      localStorage.setItem("AUTH_TOKEN", data);
       toast.success("Inicio de sesión exitoso");
+      navigate("/auth/profile", { replace: true });
     } catch (error) {
       if (isAxiosError(error) && error.response) {
-          toast.error(error.response.data.error);
+        toast.error(error.response.data.error);
       }
     }
   };
 
   return (
-    <>
-      <div className="max-w-lg mx-auto">
-        {/* Encabezado de la Sección */}
-        <header className="text-center mb-10">
-          <h1 className="text-3xl font-light tracking-[0.2em] text-stone-700 uppercase">
+    <div className="min-h-[65vh] flex flex-col justify-center items-center py-10 relative">
+      
+      {/* BOTÓN VOLVER: Conservando tu estilo de Link original */}
+      <div className="w-full max-w-lg mb-6 flex justify-start">
+        <Link 
+          to="/" 
+          className="text-stone-400 text-xs uppercase tracking-[0.3em] hover:text-[#2897A3] transition-colors flex items-center gap-2"
+        >
+          <span>←</span> Inicio
+        </Link>
+      </div>
+
+      <div className="w-full max-w-lg mx-auto">
+        
+        {/* Encabezado: Títulos originales */}
+        <header className="text-center mb-12">
+          <h1 className="text-4xl font-light tracking-[0.2em] text-stone-700 uppercase">
             Iniciar <span className="font-semibold text-[#2897A3]">Sesión</span>
           </h1>
-          <p className="text-stone-400 text-xs mt-2 tracking-widest uppercase">
+          <p className="text-stone-500 text-sm mt-3 tracking-[0.3em] uppercase font-medium">
             Bienvenidos a la experiencia Le Cocom
           </p>
         </header>
 
         <form
           onSubmit={handleSubmit(handleLogin)}
-          className="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl shadow-stone-200/50 border border-stone-100 space-y-6"
+          className="bg-white p-10 md:p-14 rounded-[3rem] shadow-2xl shadow-stone-200/70 border border-stone-100 space-y-8"
+          noValidate
         >
           {/* Campo: Email */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-3">
             <label
               htmlFor="email"
-              className="text-[10px] uppercase tracking-[0.2em] text-stone-500 ml-1"
+              className="text-xs uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
             >
               E-mail
             </label>
             <input
               id="email"
               type="email"
-              placeholder="email@ejemplo.com"
-              className="w-full bg-stone-50 border border-stone-100 p-4 rounded-xl placeholder-stone-300 text-stone-600 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
+              placeholder="tu@email.com"
+              className="w-full bg-stone-50 border border-stone-200 p-5 rounded-2xl placeholder-stone-400 text-stone-700 text-base focus:outline-none focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] transition-all"
               {...register("email", {
                 required: "El Email es obligatorio",
                 pattern: {
@@ -68,16 +85,15 @@ export default function LoginView() {
               })}
             />
             {errors.email && (
-              <ErrorMessage>{errors.email.message} </ErrorMessage>
+              <ErrorMessage>{errors.email.message}</ErrorMessage>
             )}
           </div>
 
           {/* Campo: Password */}
-
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-3">
             <label
               htmlFor="password"
-              className="text-[10px] uppercase tracking-[0.2em] text-stone-500 ml-1"
+              className="text-xs uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
             >
               Password
             </label>
@@ -85,39 +101,40 @@ export default function LoginView() {
               id="password"
               type="password"
               placeholder="••••••••"
-              className="w-full bg-stone-50 border border-stone-100 p-4 rounded-xl placeholder-stone-300 text-stone-600 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
+              className="w-full bg-stone-50 border border-stone-200 p-5 rounded-2xl placeholder-stone-400 text-stone-700 text-base focus:outline-none focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] transition-all"
               {...register("password", {
                 required: "El Password es obligatorio",
               })}
             />
             {errors.password && (
-              <ErrorMessage>{errors.password.message} </ErrorMessage>
+              <ErrorMessage>{errors.password.message}</ErrorMessage>
             )}
           </div>
 
-          {/* Botón Submit */}
-          <div className="pt-4">
-            <input
+          {/* Botón de Acción original */}
+          <div className="pt-6">
+            <button
               type="submit"
-              className="w-full bg-[#B5A447] hover:bg-[#2897A3] text-white p-4 rounded-xl text-xs uppercase tracking-[0.2em] font-bold cursor-pointer transition-all duration-500 shadow-lg shadow-[#B5A447]/20"
-              value="Iniciar sesión"
-            />
+              className="w-full bg-[#B5A447] hover:bg-[#2897A3] text-white p-5 rounded-2xl text-sm uppercase tracking-[0.2em] font-black cursor-pointer transition-all duration-500 shadow-xl shadow-[#B5A447]/20 active:scale-[0.97]"
+            >
+              Iniciar sesión
+            </button>
           </div>
         </form>
 
-        {/* Navegación Inferior */}
-        <nav className="mt-8 text-center">
+        {/* Navegación Inferior original */}
+        <nav className="mt-12 text-center">
           <Link
             to="/user/register"
-            className="text-stone-400 text-[11px] uppercase tracking-widest hover:text-[#2897A3] transition-colors"
+            className="group text-stone-500 text-xs uppercase tracking-[0.3em] hover:text-[#2897A3] transition-colors"
           >
             ¿Aún no tienes cuenta?{" "}
-            <span className="font-bold border-b border-stone-200">
+            <span className="font-black text-stone-700 group-hover:text-[#2897A3] border-b-2 border-stone-200 transition-all ml-1">
               Crear cuenta
             </span>
           </Link>
         </nav>
       </div>
-    </>
+    </div>
   );
 }

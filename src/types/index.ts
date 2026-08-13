@@ -29,9 +29,20 @@ export type ServiciosDataBase = {
     group:string;
     duration:number;
     price:number;
+    image:string;
     enabled:boolean;
     description?:string;
 
 }
 
-export type Servicio = Pick<ServiciosDataBase, 'handle' | 'name' | 'group' | 'duration' | 'price' | 'enabled' | 'description'>; 
+export type PromocionesDataBase = {
+    handle:string;
+    title:string;
+    description:string; 
+    image:string;
+    enabled:boolean;
+}
+
+export type Servicio = Pick<ServiciosDataBase, 'handle' | 'name' | 'group' | 'duration' | 'price' | 'enabled' | 'description' | 'image'>; 
+
+export type Promocion = Pick<PromocionesDataBase, 'handle' | 'title' | 'description' | 'image'| 'enabled'>;
