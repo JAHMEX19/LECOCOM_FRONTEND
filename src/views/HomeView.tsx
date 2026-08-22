@@ -248,7 +248,7 @@ export default function HomeView() {
                     Lunes a Sábado: 09:00 AM — 09:00 PM
                   </p>
                   <p className="text-stone-500 text-sm">
-                    Domingos: Previa cita
+                    Domingos: No laboramos
                   </p>
                 </div>
               </div>
@@ -271,7 +271,7 @@ export default function HomeView() {
                     +52 938 151 4024
                   </p>
                   <p className="text-stone-500 text-sm">
-                    citas@lecocomspa.com
+                    lecocom.spa0609@gmail.com
                   </p>
                 </div>
               </Link>
