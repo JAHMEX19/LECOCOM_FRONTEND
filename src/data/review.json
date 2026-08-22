@@ -1,0 +1,27 @@
+{
+  "rating": 4.6,
+  "totalReviews": 36,
+  "reviews": [
+    {
+      "author_name": "Ramiro Antonio Reyes Medrano “Toño”",
+      "rating": 5,
+      "relative_time_description": "26 may 2025",
+      "text": "Excelente servicio, he probado en otros lugares pero sigue en el primer lugar de acuerdo a mi experiencia.",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVaCHn04KplaRK49uU1PIddaUyfQv_N-yU3Io2OQ2S5nxcqF8I5HQ=w72-h72-p-rp-mo-ba12-br100"
+    },
+    {
+      "author_name": "Eduardo Medina",
+      "rating": 5,
+      "relative_time_description": "15 mar 2025",
+      "text": "Excelente atención, muy amables, muy discretos, muy profesionales! Recomendable.",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjX37nEFVd_2guW0LxvH1WGrbOw1ge3qpAJmClm9FNCs122A93eg=w72-h72-p-rp-mo-ba12-br100"
+    },
+    {
+      "author_name": "María López",
+      "rating": 5,
+      "relative_time_description": "19 oct 2024",
+      "text": "Una muy grata sorpresa, más allá de la muy especial atención, al poder sentir un gran descanso y relajación después de esta terapia, reconectando y alineando todos los sentidos en un momento de gran relajación.",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocLvtQH3OPgwVgYYtSY6ZP5ROItGHiLdWdYhwc45PZ8aVbd5Gg=w72-h72-p-rp-mo-br100"
+    }
+  ]
+}
