@@ -17,8 +17,9 @@ export default function ServiciosView() {
   });
 
   if (isLoading) return <LoadingHeader />;
+  
   if (isError) return (
-    <div className="py-60 text-center font-serif italic text-3xl text-stone-400">
+    <div className="w-full py-40 text-center font-serif italic text-2xl sm:text-3xl text-stone-400">
       Ocurrió un error al conectar con el santuario.
     </div>
   );
@@ -30,38 +31,37 @@ export default function ServiciosView() {
     : serviciosActivos.filter(s => s.group === categoriaSeleccionada);
 
   return (
-    /* Eliminamos max-w-7xl para usar el ancho de 1600px definido en el main del Header */
-    <div className="w-full space-y-32">
+    <div className="w-full bg-[#FCFAF8] text-stone-800 overflow-x-hidden space-y-20 sm:space-y-28 py-12 sm:py-20 px-6 sm:px-12 lg:px-20">
       
-      {/* HEADER DE SECCIÓN: Escalado para impacto visual */}
-      <header className="text-center space-y-10 animate-in fade-in slide-in-from-top-10 duration-1000">
-        <div className="flex justify-center items-center gap-6 mb-2">
-          <div className="h-[1px] w-16 bg-stone-200" />
-          <span className="text-[13px] tracking-[0.8em] text-[#B5A447] font-black uppercase">
-            Experiencias
-          </span>
-          <div className="h-[1px] w-16 bg-stone-200" />
+      {/* 1. HEADER DE SECCIÓN */}
+      <header className="text-center space-y-6 sm:space-y-8 animate-fadeIn max-w-7xl mx-auto">
+        
+        {/* BADGE ENCERRADO IGUAL QUE EN ABOUT US */}
+        <div className="inline-block px-6 py-2.5 sm:px-8 sm:py-3 border border-stone-200 bg-white/60 backdrop-blur-md rounded-full shadow-sm">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-[#D4C363] font-bold">
+            Experiencias & Rituales
+          </p>
         </div>
-        
-        <h1 className="text-7xl md:text-8xl lg:text-9xl font-light text-stone-800 tracking-tighter leading-[0.9]">
-          Nuestra <span className="font-serif italic text-[#2897A3]">Selección</span>
+
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-stone-800 tracking-tight leading-[1.1]">
+          Nuestra <span className="font-serif italic text-[#2897A3] font-normal">Selección</span>
         </h1>
-        
-        <p className="max-w-3xl mx-auto text-stone-400 text-xl md:text-2xl font-light italic leading-relaxed">
+
+        <p className="max-w-5xl mx-auto text-stone-700 text-xl sm:text-2xl md:text-3xl font-light italic leading-relaxed tracking-wide drop-shadow-sm">
           "Un catálogo de terapias diseñadas para restaurar tu equilibrio interior y armonía absoluta."
         </p>
       </header>
 
-      {/* FILTROS: Normalizados con text-[12px] y tracking alto */}
-      <nav className="flex flex-wrap justify-center gap-5">
+      {/* 2. FILTROS DE CATEGORÍA */}
+      <nav className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 max-w-6xl mx-auto">
         {categorias.map((cat) => (
           <button
             key={cat}
             onClick={() => setCategoriaSeleccionada(cat)}
-            className={`px-12 py-5 rounded-full text-[12px] uppercase tracking-[0.4em] font-black transition-all duration-700 border shadow-sm ${
+            className={`px-8 py-3.5 sm:px-10 sm:py-4 rounded-full text-xs sm:text-sm uppercase tracking-[0.25em] font-bold transition-all duration-500 border ${
               categoriaSeleccionada === cat
-                ? "bg-stone-900 border-stone-900 text-white shadow-2xl scale-110"
-                : "bg-white border-stone-100 text-stone-400 hover:border-[#B5A447] hover:text-[#B5A447] hover:shadow-md"
+                ? "bg-stone-900 border-stone-900 text-white shadow-xl scale-105"
+                : "bg-white border-stone-200/80 text-stone-500 hover:border-[#D4C363] hover:text-stone-900 hover:shadow-md"
             }`}
           >
             {cat === "todos" ? "Ver Todo" : cat}
@@ -69,8 +69,8 @@ export default function ServiciosView() {
         ))}
       </nav>
 
-      {/* GRID BENTO: Ajustado a 5 columnas (XL) con mayor espacio (gap-10) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-10 auto-rows-[400px]">
+      {/* 3. GRID BENTO RESPONSIVO */}
+      <div className="w-full max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 lg:gap-10 auto-rows-[380px] sm:auto-rows-[420px]">
         {serviciosFiltrados.map((servicio, index) => {
           const isHuge = index % 10 === 0;
           const isWide = index % 10 === 3 || index % 10 === 7;
@@ -79,11 +79,11 @@ export default function ServiciosView() {
             <div 
               key={servicio.handle}
               className={`
-                ${isHuge ? "lg:col-span-2 lg:row-span-2" : ""}
-                ${isWide ? "lg:col-span-2 lg:row-span-1" : "lg:col-span-1"}
-                transition-all duration-1000 animate-in zoom-in-95
+                ${isHuge ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : ""}
+                ${isWide ? "sm:col-span-2 lg:col-span-2 lg:row-span-1" : "col-span-1"}
+                transition-all duration-700 hover:-translate-y-1
               `}
-              style={{ animationDelay: `${index * 120}ms` }}
+              style={{ animationDelay: `${index * 80}ms` }}
             >
               <ServiceCard 
                 servicio={servicio} 
@@ -94,15 +94,16 @@ export default function ServiciosView() {
         })}
       </div>
 
-      {/* Mensaje de "Sin resultados" normalizado */}
+      {/* 4. MENSAJE SIN RESULTADOS */}
       {serviciosFiltrados.length === 0 && (
-        <div className="text-center py-40">
-          <p className="text-stone-300 font-serif text-3xl italic">
+        <div className="text-center py-32 bg-white rounded-[3rem] border border-stone-200/60 shadow-sm max-w-4xl mx-auto">
+          <p className="text-stone-500 font-serif text-2xl sm:text-3xl italic">
             No se encontraron rituales en esta categoría.
           </p>
         </div>
       )}
 
+      {/* MODAL DE SERVICIO */}
       {selectedService && (
         <ServiceModal servicio={selectedService} onClose={() => setSelectedService(null)} />
       )}

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "idecc",
+    "name": "IDECC",
+    "logo": "/assets/IDECC.jpg",
+    "subtitle": "Acreditación Cosmiátrica",
+    "description": "Instituto de Estética, Cosmetología y Cosmiatría",
+    "isHighlight": false
+  },
+  {
+    "id": "cmtfn",
+    "name": "CMTFN",
+    "logo": "/assets/CMTFN.png",
+    "subtitle": "Terapia Holística",
+    "description": "Colegio Mexicano de Terapeutas Florales y Naturales A.C.",
+    "isHighlight": false
+  },
+  {
+    "id": "gdc-fisio",
+    "name": "GDC",
+    "logo": "/logo.svg",
+    "subtitle": "Especialización",
+    "description": "Fisioyoga y Movimiento Consciente",
+    "isHighlight": true
+  }
+  
+]

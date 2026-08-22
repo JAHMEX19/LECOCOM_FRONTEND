@@ -73,8 +73,8 @@ export default function ServiceModal({ servicio, onClose }: ServiceModalProps) {
 
             <div className="pt-4">
               <button 
-                onClick={() => window.location.href = 'https://wa.me/tu-numero-aqui'}
-                className="w-full py-7 bg-stone-900 text-white text-sm tracking-[0.4em] font-black uppercase rounded-[2rem] hover:bg-[#2897A3] transition-all duration-700 shadow-2xl shadow-stone-300 active:scale-[0.97] flex items-center justify-center gap-4 group"
+                onClick={() => window.location.href = `https://wa.me/529381514024?text=Hola,%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20sus%20servicios%20${servicio.name}`}
+                className="w-full py-7 bg-stone-900 text-white text-sm tracking-[0.4em] font-black uppercase rounded-[2rem] hover:bg-[#D4C363] transition-all duration-700 shadow-2xl shadow-stone-300 active:scale-[0.97] flex items-center justify-center gap-4 group"
               >
                 <span>Reservar</span>
                 <div className="h-[1px] w-8 bg-white/30 group-hover:w-12 transition-all" />
