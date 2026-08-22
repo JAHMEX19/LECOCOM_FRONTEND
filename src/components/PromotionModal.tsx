@@ -51,26 +51,27 @@ export default function PromotionModal({ promo, onClose }: PromotionModalProps) 
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-stone-800 tracking-tight leading-tight pt-2 font-serif italic">
                 {promo.title}
               </h2>
+
+              {/* BOTÓN REUBICADO DEBAJO DEL TÍTULO */}
+              <div className="pt-2">
+                <a 
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 sm:py-4.5 bg-[#D4C363] text-stone-950 text-xs sm:text-sm tracking-[0.25em] font-bold uppercase rounded-full hover:bg-stone-900 hover:text-white transition-all duration-500 shadow-xl shadow-[#D4C363]/20 text-center block active:scale-[0.98]"
+                >
+                  Reservar Promoción
+                </a>
+              </div>
             </div>
 
             <p className="text-stone-600 text-base sm:text-lg leading-relaxed font-normal italic">
               {promo.description}
             </p>
 
-            <div className="pt-2 sm:pt-4">
-              <a 
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-4 sm:py-5 bg-[#D4C363] text-stone-950 text-xs sm:text-sm tracking-[0.25em] font-bold uppercase rounded-full hover:bg-stone-900 hover:text-white transition-all duration-500 shadow-xl shadow-[#D4C363]/20 text-center block active:scale-[0.98]"
-              >
-                Reservar Promoción
-              </a>
-              
-              <p className="text-center mt-3 text-stone-400 text-[10px] uppercase tracking-[0.2em]">
-                Sujeto a disponibilidad • Le Cocom Spa
-              </p>
-            </div>
+            <p className="text-center mt-3 text-stone-400 text-[10px] uppercase tracking-[0.2em] pt-2 border-t border-stone-100">
+              Sujeto a disponibilidad • Le Cocom Spa
+            </p>
           </div>
         </div>
 
