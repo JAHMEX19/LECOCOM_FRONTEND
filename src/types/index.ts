@@ -5,13 +5,13 @@ export type User = {
     password:string;
     token:string;
     confirm?:boolean;
-    admin?:boolean;
+    admin?: boolean;
     _id:string;
     descripcion?:string;
     image?:string;
 }
 
-export type RegisterFormData = Pick<User, 'handle' | 'name' | 'email' > & {
+export type RegisterFormData = Pick<User, 'handle' | 'name' | 'email' | 'admin' > & {
     password:string,
     password_confirmation:string,
 }

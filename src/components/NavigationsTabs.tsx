@@ -1,5 +1,5 @@
 import { BookmarkSquareIcon, UserIcon, SparklesIcon } from "@heroicons/react/20/solid";
-import { CameraIcon } from "@heroicons/react/24/outline";
+import { CameraIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const userTabs = [
@@ -9,8 +9,9 @@ const userTabs = [
 
 const adminTabs = [
   { name: "Mi Perfil", href: "/auth/profile", icon: UserIcon },
-  { name: "Promociones", href: "/auth/admin/promociones", icon: CameraIcon},
-  { name: "Servicios", href: "/auth/admin/servicios", icon: SparklesIcon},
+  { name: "Promociones", href: "/auth/admin/promociones", icon: CameraIcon },
+  { name: "Servicios", href: "/auth/admin/servicios", icon: SparklesIcon },
+  { name: "Crear Usuario", href: "/auth/admin/register", icon: UserPlusIcon },
 ];
 
 function classNames(...classes: string[]) {
@@ -65,23 +66,20 @@ export default function NavigationTabs({ isAdmin }: NavigationTabsProps) {
                   className={classNames(
                     isActive
                       ? "border-[#2897A3] text-[#2897A3] font-black"
-                      : "border-transparent text-stone-300 hover:text-[#B5A447] hover:border-[#B5A447]/30",
-                    /* Fuente subida a 15px (text-[15px]) y tracking aumentado a 0.5em */
+                      : "border-transparent text-stone-300 hover:text-[#D4C363] hover:border-[#D4C363]/30",
                     "group inline-flex items-center border-b-[3px] py-8 px-2 text-[15px] uppercase tracking-[0.5em] transition-all duration-700 ease-out"
                   )}
                 >
                   <tab.icon
                     className={classNames(
-                      isActive ? "text-[#2897A3]" : "text-stone-200 group-hover:text-[#B5A447]",
-                      /* Icono escalado a h-6 para balancear la fuente de 15px */
+                      isActive ? "text-[#2897A3]" : "text-stone-200 group-hover:text-[#D4C363]",
                       "-ml-1 mr-5 h-6 w-6 transition-colors duration-700"
                     )}
                   />
                   <span className="relative">
                     {tab.name}
-                    {/* Efecto de barra sutil en hover para las no activas */}
                     {!isActive && (
-                      <span className="absolute -bottom-[35px] left-0 w-0 h-[3px] bg-[#B5A447]/20 group-hover:w-full transition-all duration-500" />
+                      <span className="absolute -bottom-[35px] left-0 w-0 h-[3px] bg-[#D4C363]/20 group-hover:w-full transition-all duration-500" />
                     )}
                   </span>
                 </Link>

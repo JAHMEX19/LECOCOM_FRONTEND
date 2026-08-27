@@ -2,12 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "../components/ErrorMessage";
 import type { LoginFormData } from "../types/index";
 import api from "../config/axios";
 
 export default function LoginView() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const initalValues: LoginFormData = {
     email: "",
@@ -24,6 +26,10 @@ export default function LoginView() {
     try {
       const { data } = await api.post(`/user/login`, formData);
       localStorage.setItem("AUTH_TOKEN", data);
+      
+      // Invalida la cache para que React Query refresque el usuario en los Layouts
+      await queryClient.invalidateQueries({ queryKey: ["user"] });
+
       toast.success("Inicio de sesión exitoso");
       navigate("/auth/profile", { replace: true });
     } catch (error) {
@@ -34,13 +40,13 @@ export default function LoginView() {
   };
 
   return (
-    <div className="min-h-[65vh] flex flex-col justify-center items-center py-10 relative">
+    <div className="min-h-[70vh] flex flex-col justify-center items-center py-10 px-4 relative bg-[#FCFAF8]">
       
-      {/* BOTÓN VOLVER: Conservando tu estilo de Link original */}
+      {/* BOTÓN VOLVER */}
       <div className="w-full max-w-lg mb-6 flex justify-start">
         <Link 
           to="/" 
-          className="text-stone-400 text-xs uppercase tracking-[0.3em] hover:text-[#2897A3] transition-colors flex items-center gap-2"
+          className="text-stone-400 text-xs uppercase tracking-[0.3em] hover:text-[#2897A3] transition-colors flex items-center gap-2 font-bold"
         >
           <span>←</span> Inicio
         </Link>
@@ -48,23 +54,29 @@ export default function LoginView() {
 
       <div className="w-full max-w-lg mx-auto">
         
-        {/* Encabezado: Títulos originales */}
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-light tracking-[0.2em] text-stone-700 uppercase">
-            Iniciar <span className="font-semibold text-[#2897A3]">Sesión</span>
+        {/* ENCABEZADO */}
+        <header className="text-center mb-10 space-y-3">
+          <div className="inline-block px-6 py-2 border border-stone-200 bg-white/60 backdrop-blur-md rounded-full shadow-sm">
+            <span className="text-xs uppercase tracking-[0.3em] text-[#D4C363] font-bold">
+              Portal de Acceso
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-light tracking-[0.2em] text-stone-800 uppercase">
+            Iniciar <span className="font-serif italic text-[#2897A3] font-normal">Sesión</span>
           </h1>
-          <p className="text-stone-500 text-sm mt-3 tracking-[0.3em] uppercase font-medium">
+          <p className="text-stone-500 text-xs sm:text-sm tracking-[0.25em] uppercase font-medium">
             Bienvenidos a la experiencia Le Cocom
           </p>
         </header>
 
+        {/* FORMULARIO */}
         <form
           onSubmit={handleSubmit(handleLogin)}
-          className="bg-white p-10 md:p-14 rounded-[3rem] shadow-2xl shadow-stone-200/70 border border-stone-100 space-y-8"
+          className="bg-white p-8 sm:p-12 md:p-14 rounded-[3rem] shadow-xl border border-stone-200/60 space-y-6"
           noValidate
         >
           {/* Campo: Email */}
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-2">
             <label
               htmlFor="email"
               className="text-xs uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
@@ -75,7 +87,7 @@ export default function LoginView() {
               id="email"
               type="email"
               placeholder="tu@email.com"
-              className="w-full bg-stone-50 border border-stone-200 p-5 rounded-2xl placeholder-stone-400 text-stone-700 text-base focus:outline-none focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] transition-all"
+              className="w-full bg-stone-50 border border-stone-200 p-4 sm:p-5 rounded-2xl placeholder-stone-400 text-stone-700 text-base focus:outline-none focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] transition-all"
               {...register("email", {
                 required: "El Email es obligatorio",
                 pattern: {
@@ -90,7 +102,7 @@ export default function LoginView() {
           </div>
 
           {/* Campo: Password */}
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-2">
             <label
               htmlFor="password"
               className="text-xs uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
@@ -101,7 +113,7 @@ export default function LoginView() {
               id="password"
               type="password"
               placeholder="••••••••"
-              className="w-full bg-stone-50 border border-stone-200 p-5 rounded-2xl placeholder-stone-400 text-stone-700 text-base focus:outline-none focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] transition-all"
+              className="w-full bg-stone-50 border border-stone-200 p-4 sm:p-5 rounded-2xl placeholder-stone-400 text-stone-700 text-base focus:outline-none focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] transition-all"
               {...register("password", {
                 required: "El Password es obligatorio",
               })}
@@ -111,29 +123,17 @@ export default function LoginView() {
             )}
           </div>
 
-          {/* Botón de Acción original */}
-          <div className="pt-6">
+          {/* Botón de Acción */}
+          <div className="pt-4">
             <button
               type="submit"
-              className="w-full bg-[#B5A447] hover:bg-[#2897A3] text-white p-5 rounded-2xl text-sm uppercase tracking-[0.2em] font-black cursor-pointer transition-all duration-500 shadow-xl shadow-[#B5A447]/20 active:scale-[0.97]"
+              className="w-full bg-[#D4C363] hover:bg-stone-900 text-stone-950 hover:text-white p-5 rounded-2xl text-xs sm:text-sm uppercase tracking-[0.25em] font-bold cursor-pointer transition-all duration-500 shadow-xl shadow-[#D4C363]/20 active:scale-[0.97]"
             >
               Iniciar sesión
             </button>
           </div>
         </form>
 
-        {/* Navegación Inferior original */}
-        <nav className="mt-12 text-center">
-          <Link
-            to="/user/register"
-            className="group text-stone-500 text-xs uppercase tracking-[0.3em] hover:text-[#2897A3] transition-colors"
-          >
-            ¿Aún no tienes cuenta?{" "}
-            <span className="font-black text-stone-700 group-hover:text-[#2897A3] border-b-2 border-stone-200 transition-all ml-1">
-              Crear cuenta
-            </span>
-          </Link>
-        </nav>
       </div>
     </div>
   );

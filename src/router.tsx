@@ -28,8 +28,7 @@ export default function Router() {
 
         {/* Grupo de rutas de Usuario Invitado */}
           <Route path="/user">
-            <Route path="login" element={<LoginView />} />
-            <Route path="register" element={<RegisterView />} />
+            <Route path="login" element={<LoginView />} />   
           </Route>   
 
         <Route path="/auth" element={<ClientLayout />}>
@@ -37,6 +36,7 @@ export default function Router() {
           <Route path="wellness" element={<WellnessView />} />
           <Route path="admin/servicios" element={<AdminView />} />
           <Route path="admin/promociones" element={<AdminView />} />
+          <Route path="admin/register" element={<RegisterView />} />
         </Route>
 
       </Routes>
