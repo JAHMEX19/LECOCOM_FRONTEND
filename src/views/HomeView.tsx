@@ -15,61 +15,73 @@ export default function HomeView() {
     <div className="w-full bg-[#FCFAF8] text-stone-800 overflow-x-hidden">
       
       {/* 1. HERO SECTION */}
-      <section className="relative w-full min-h-[calc(100vh-7rem)] flex items-center justify-center overflow-hidden bg-stone-900 py-16">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=2000"
-            alt="Atmósfera relajante de Spa Le Cocom"
-            className="w-full h-full object-cover animate-[slow-zoom_30s_linear_infinite]"
-            loading="eager"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/75 backdrop-blur-[1px]"></div>
-        </div>
+<section className="relative w-full min-h-[calc(100vh-7rem)] flex items-center justify-center overflow-hidden bg-stone-950 py-16">
+  
+  {/* Imagen de fondo con Overlay de Alto Contraste */}
+  <div className="absolute inset-0 z-0">
+    <img
+      src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=2000"
+      alt="Atmósfera de serenidad y bienestar en Le Cocom Spa"
+      className="w-full h-full object-cover animate-[slow-zoom_30s_linear_infinite]"
+      loading="eager"
+    />
+    {/* Gradient reforzado y desenfoque suave para legibilidad perfecta */}
+    <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85 backdrop-blur-[2px]"></div>
+  </div>
 
-        <div className="relative z-10 text-center space-y-6 sm:space-y-8 px-6 sm:px-12 lg:px-20 w-full my-auto max-w-7xl mx-auto">
-          <div className="inline-block px-6 py-2.5 sm:px-8 sm:py-3 border border-white/30 rounded-full backdrop-blur-md bg-white/5">
-            <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-white font-medium">
-              Bienvenido al Santuario
-            </p>
-          </div>
+  {/* Contenido Central */}
+  <div className="relative z-10 text-center space-y-6 sm:space-y-8 px-6 sm:px-12 lg:px-20 w-full my-auto max-w-7xl mx-auto">
+    
+    {/* Insignia / Badge con contraste mejorado */}
+    <div className="inline-block px-6 py-2.5 sm:px-8 sm:py-3 border border-white/25 rounded-full backdrop-blur-xl bg-black/40 shadow-xl">
+      <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-stone-100 font-semibold drop-shadow-sm">
+        Un Pausa para la Armonía
+      </p>
+    </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white tracking-tight leading-[1.1]">
-            Renace en <br />
-            <span className="font-serif italic text-[#D4C363] font-normal">
-              Le Cocom Spa
-            </span>
-          </h1>
+    {/* Título Principal con Text Shadow Profunda */}
+    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white tracking-tight leading-[1.1] [text-shadow:_0_4px_20px_rgb(0_0_0_/_90%)]">
+      Renace en <br />
+      <span className="font-serif italic text-[#D4C363] font-normal drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+        Le Cocom Spa
+      </span>
+    </h1>
 
-          <p className="max-w-5xl mx-auto text-white text-xl sm:text-2xl md:text-3xl font-normal leading-relaxed tracking-wide drop-shadow-md">
-            Un espacio de paz diseñado para restaurar su cuerpo y serenar su mente.
-          </p>
+    {/* Párrafo Descriptivo con Sombra */}
+    <p className="max-w-5xl mx-auto text-stone-100 text-xl sm:text-2xl md:text-3xl font-light leading-relaxed tracking-wide drop-shadow-[0_3px_10px_rgba(0,0,0,0.9)]">
+      Un espacio de paz diseñado para restaurar su cuerpo y serenar su mente.
+    </p>
 
-          <div className="pt-4 sm:pt-6">
-            <Link
-              to="/servicios"
-              className="
-                inline-flex items-center justify-center
-                bg-[#D4C363] text-stone-950 
-                px-8 py-4 sm:px-12 sm:py-5
-                rounded-full 
-                text-xs sm:text-sm 
-                uppercase tracking-[0.25em] font-bold 
-                hover:bg-white hover:text-stone-950
-                transition-all duration-300 
-                shadow-2xl hover:shadow-[#D4C363]/20
-                transform active:scale-95 hover:scale-105
-              "
-            >
-              Explorar Servicios
-            </Link>
-          </div>
-        </div>
+    {/* Botón CTA */}
+    <div className="pt-4 sm:pt-6">
+      <Link
+        to="/servicios"
+        className="
+          inline-flex items-center justify-center
+          bg-[#D4C363] text-stone-950 
+          px-8 py-4 sm:px-12 sm:py-5
+          rounded-full 
+          text-xs sm:text-sm 
+          uppercase tracking-[0.25em] font-bold 
+          hover:bg-white hover:text-stone-950
+          transition-all duration-300 
+          shadow-2xl hover:shadow-[#D4C363]/30
+          transform active:scale-95 hover:scale-105
+        "
+      >
+        Explorar Servicios
+      </Link>
+    </div>
+  </div>
 
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center opacity-60 hover:opacity-100 transition-opacity">
-          <span className="text-[10px] text-white uppercase tracking-[0.3em] mb-2 font-light">Descubrir</span>
-          <div className="w-0.5 h-8 bg-gradient-to-b from-white to-transparent animate-pulse"></div>
-        </div>
-      </section>
+  {/* Indicador de Desplazamiento */}
+  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center opacity-75 hover:opacity-100 transition-opacity">
+    <span className="text-[10px] text-stone-200 uppercase tracking-[0.3em] mb-2 font-medium drop-shadow-md">
+      Descubrir
+    </span>
+    <div className="w-0.5 h-8 bg-gradient-to-b from-white to-transparent animate-pulse"></div>
+  </div>
+</section>
 
       {/* 2. LA PROMESA */}
       <section className="w-full px-6 sm:px-12 lg:px-20 py-20 sm:py-28">
@@ -245,7 +257,7 @@ export default function HomeView() {
                     Horario de Atención
                   </h4>
                   <p className="text-stone-800 font-medium text-lg">
-                    Lunes a Sábado: 09:00 AM — 09:00 PM
+                    Lunes a Sábado: 10:00 AM — 08:30 PM
                   </p>
                   <p className="text-stone-500 text-sm">
                     Domingos: No laboramos
