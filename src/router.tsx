@@ -8,7 +8,7 @@ import Headers from './layouts/Headers';
 
 import ClientLayout from './layouts/ClientLayout';
 import AdminLayout from './layouts/AdminLayout';
-
+import SAdminLayout from './layouts/SAdminLayout';
 
 
 import WellnessView from './components/WellnessView';
@@ -18,6 +18,7 @@ import ServiciosView from './views/ServiciosView';
 import FormProfileView from './components/FormProfileView';
 import PromotionsView from './views/PromotionsView'; // Vista Pública de Promociones
 import UsersManagementView from './components/UsersManagmentView';
+
 
 
 
@@ -52,7 +53,7 @@ export default function Router() {
             <Route path="admin/promociones" element={<FormPromotionsView />} />
 
             {/* Rutas exclusivas para SuperAdmin */}
-            <Route element={<AdminLayout />}>
+            <Route element={<SAdminLayout />}>
               <Route path="admin/users" element={<UsersManagementView />} />
               <Route path="admin/register" element={<RegisterView />} />
             </Route>
