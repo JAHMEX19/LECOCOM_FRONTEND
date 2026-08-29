@@ -6,12 +6,13 @@ export type User = {
     token:string;
     confirm?:boolean;
     admin?: boolean;
+    superAdmin?: boolean;
     _id:string;
     descripcion?:string;
     image?:string;
 }
 
-export type RegisterFormData = Pick<User, 'handle' | 'name' | 'email' | 'admin' > & {
+export type RegisterFormData = Pick<User, 'handle' | 'name' | 'email' | 'admin' | 'superAdmin' > & {
     password:string,
     password_confirmation:string,
 }

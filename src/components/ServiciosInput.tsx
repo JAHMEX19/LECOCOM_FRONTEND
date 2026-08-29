@@ -35,7 +35,7 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
   const { mutate: mutateUpdate, isPending: isUpdating } = useMutation({
     mutationFn: updateServicio,
     onSuccess: () => {
-      toast.success("Servicio actualizado");
+      toast.success("Servicio actualizado correctamente");
       queryClient.invalidateQueries({ queryKey: ["servicios"] });
       setIsEditing(false);
     },
@@ -48,7 +48,7 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
       if (url) {
         setValue("image", url, { shouldDirty: true });
       }
-      toast.success("Imagen cargada");
+      toast.success("Imagen cargada con éxito");
     },
     onError: (error) => toast.error(error.message || "Error al subir la imagen"),
   });
@@ -75,53 +75,54 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
     reset();
   };
 
-  const labelStyle = "text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1 mb-1.5 block";
-  const inputEditStyle = "w-full bg-white border border-stone-100 px-4 py-2.5 rounded-xl text-xs text-stone-600 focus:ring-1 focus:ring-[#2897A3] outline-none transition-all shadow-sm disabled:opacity-50";
+  const labelStyle = "text-[9px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1 mb-1.5 block";
+  const inputEditStyle = "w-full bg-stone-50 border border-stone-200 px-4 py-3 rounded-2xl text-xs text-stone-700 focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] outline-none transition-all disabled:opacity-50 placeholder:text-stone-300 font-medium";
 
   return (
     <div
-      className={`bg-white border transition-all duration-500 p-6 rounded-[2.5rem] mb-4 ${
+      className={`bg-white border transition-all duration-300 p-6 sm:p-7 rounded-[2.5rem] shadow-sm mb-5 ${
         isEditing
-          ? "border-[#2897A3] ring-4 ring-[#2897A3]/5 shadow-xl scale-[1.01]"
-          : "border-stone-100 hover:border-stone-200 shadow-sm"
+          ? "border-[#2897A3] ring-4 ring-[#2897A3]/10 shadow-xl"
+          : "border-stone-200/70 hover:border-stone-300 hover:shadow-md"
       }`}
     >
       {isEditing ? (
+        /* MODO EDICIÓN */
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             
             {/* Imagen de Previsualización y Carga */}
-            <div className="md:col-span-3">
-              <label className={labelStyle}>Imagen</label>
-              <div className="relative group aspect-video md:aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-stone-100 shadow-inner">
+            <div className="md:col-span-4 lg:col-span-3">
+              <label className={labelStyle}>Imagen del Servicio</label>
+              <div className="relative group aspect-video md:aspect-square rounded-2xl overflow-hidden bg-stone-100 border border-stone-200 shadow-inner">
                 {currentImage ? (
                   <img
                     src={currentImage}
-                    className={`h-full w-full object-cover transition-all duration-500 ${uploadMutation.isPending ? "scale-110 blur-sm opacity-50" : "opacity-100"}`}
+                    className={`h-full w-full object-cover transition-all duration-500 ${uploadMutation.isPending ? "scale-105 blur-sm opacity-50" : "opacity-100"}`}
                     alt="Preview"
                   />
                 ) : (
-                  <div className="h-full flex items-center justify-center bg-stone-50">
-                    <PhotoIcon className="h-8 w-8 text-stone-200" />
+                  <div className="h-full flex items-center justify-center bg-stone-100">
+                    <PhotoIcon className="h-8 w-8 text-stone-300" />
                   </div>
                 )}
                 
                 {uploadMutation.isPending && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-6 h-6 border-2 border-[#2897A3] border-t-transparent rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 )}
 
-                <label className="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                <label className="absolute inset-0 bg-stone-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
                   <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-                  <span className="text-[10px] text-white font-bold uppercase tracking-widest">Cambiar</span>
+                  <span className="text-[10px] text-white font-bold uppercase tracking-[0.2em]">Cambiar Imagen</span>
                 </label>
               </div>
               <input type="hidden" {...register("image")} />
             </div>
 
             {/* Datos del Servicio */}
-            <div className="md:col-span-9 grid grid-cols-1 md:grid-cols-6 gap-4">
+            <div className="md:col-span-8 lg:col-span-9 grid grid-cols-1 md:grid-cols-6 gap-4">
               <div className="md:col-span-4">
                 <label className={labelStyle}>Nombre del Servicio</label>
                 <input
@@ -131,27 +132,26 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
                 />
               </div>
 
-              <div className="md:col-span-2">
-                <label className={labelStyle}>Visible</label>
-                <div className="h-[42px] flex items-center justify-center bg-stone-50 rounded-xl border border-stone-100">
-                  <Controller
-                    name="enabled"
-                    control={control}
-                    render={({ field }) => (
-                      <Switch
-                        checked={field.value}
-                        onChange={field.onChange}
-                        className={`${field.value ? "bg-[#2897A3]" : "bg-stone-200"} relative inline-flex h-5 w-10 items-center rounded-full transition-colors outline-none`}
-                      >
-                        <span className={`${field.value ? "translate-x-6" : "translate-x-1"} inline-block h-3 w-3 transform rounded-full bg-white transition-transform`} />
-                      </Switch>
-                    )}
-                  />
-                </div>
+              {/* Switch Visibilidad */}
+              <div className="md:col-span-2 flex flex-col items-center justify-center bg-stone-50/80 p-2 rounded-2xl border border-stone-200/70">
+                <label className="text-[9px] uppercase text-stone-600 font-bold mb-1.5 tracking-[0.2em]">Visible</label>
+                <Controller
+                  name="enabled"
+                  control={control}
+                  render={({ field }) => (
+                    <Switch
+                      checked={field.value}
+                      onChange={field.onChange}
+                      className={`${field.value ? "bg-[#2897A3]" : "bg-stone-300"} relative inline-flex h-6 w-11 items-center rounded-full transition-colors outline-none cursor-pointer`}
+                    >
+                      <span className={`${field.value ? "translate-x-6" : "translate-x-1"} inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow-md`} />
+                    </Switch>
+                  )}
+                />
               </div>
 
               <div className="md:col-span-3">
-                <label className={labelStyle}>Duración (min)</label>
+                <label className={labelStyle}>Duración (Minutos)</label>
                 <input
                   type="number"
                   {...register("duration", { valueAsNumber: true })}
@@ -161,7 +161,7 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
               </div>
 
               <div className="md:col-span-3">
-                <label className={labelStyle}>Precio ($)</label>
+                <label className={labelStyle}>Precio ($ MXN)</label>
                 <input
                   type="number"
                   {...register("price", { valueAsNumber: true })}
@@ -171,68 +171,75 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
               </div>
 
               <div className="md:col-span-6">
-                <label className={labelStyle}>Descripción</label>
+                <label className={labelStyle}>Descripción Corta</label>
                 <textarea
                   {...register("description")}
                   rows={2}
-                  className={`${inputEditStyle} resize-none`}
+                  className={`${inputEditStyle} resize-none leading-relaxed`}
                   disabled={isUpdating}
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-stone-50">
+          {/* Botones de Acción */}
+          <div className="flex justify-end gap-3 pt-4 border-t border-stone-100">
             <button
               type="button"
               onClick={handleCancel}
-              className="px-5 py-2.5 rounded-xl text-stone-400 text-[10px] font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl bg-stone-100 text-stone-600 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-1.5 hover:bg-stone-200 transition-colors cursor-pointer"
             >
               <XMarkIcon className="h-4 w-4" /> Cancelar
             </button>
             <button
               type="submit"
               disabled={isUpdating || uploadMutation.isPending}
-              className="px-8 py-2.5 rounded-xl bg-stone-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#2897A3] transition-all shadow-lg shadow-stone-200 flex items-center gap-2 disabled:bg-stone-200"
+              className="px-6 py-2.5 rounded-xl bg-[#D4C363] text-stone-950 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 hover:bg-stone-900 hover:text-white transition-all duration-300 shadow-md active:scale-95 cursor-pointer disabled:bg-stone-200"
             >
-              {isUpdating ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <CheckIcon className="h-4 w-4" />}
+              {isUpdating ? <div className="w-4 h-4 border-2 border-stone-950 border-t-transparent rounded-full animate-spin" /> : <CheckIcon className="h-4 w-4" />}
               Guardar Cambios
             </button>
           </div>
         </form>
       ) : (
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        /* MODO LECTURA */
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="flex items-center gap-5 flex-1 min-w-0">
-            <div className="h-14 w-14 rounded-2xl overflow-hidden flex-shrink-0 border border-stone-100 shadow-sm bg-stone-50">
+            <div className="h-20 w-28 rounded-2xl overflow-hidden flex-shrink-0 border border-stone-200/80 shadow-sm bg-stone-100">
               {item.image ? (
                 <img src={item.image} className="h-full w-full object-cover" alt={item.name} />
               ) : (
-                <PhotoIcon className="h-full w-full p-3 text-stone-200" />
+                <div className="h-full w-full flex items-center justify-center bg-stone-100">
+                  <PhotoIcon className="h-6 w-6 text-stone-300" />
+                </div>
               )}
             </div>
-            <div className="truncate">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#B5A447] font-bold block mb-1">
-                {item.group}
+            <div className="truncate space-y-1">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#2897A3]/10 text-[#2897A3] text-[9px] font-bold tracking-widest uppercase border border-[#2897A3]/20 inline-block">
+                {item.group || "Ritual"}
               </span>
-              <h4 className="text-sm font-semibold text-stone-800 truncate">{item.name}</h4>
-              <p className="text-[11px] text-stone-400 italic line-clamp-1 mt-0.5">{item.description}</p>
+              <h4 className="text-base font-serif italic text-stone-800 truncate font-normal">{item.name}</h4>
+              <p className="text-xs text-stone-500 italic line-clamp-1 font-light">"{item.description || "Sin descripción disponible"}"</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between md:justify-end gap-8 border-t md:border-t-0 pt-4 md:pt-0">
-            <div className="flex gap-8">
+          <div className="flex items-center justify-between md:justify-end gap-6 md:gap-8 border-t md:border-t-0 pt-3 md:pt-0 border-stone-100">
+            <div className="flex gap-6 sm:gap-8">
               <div className="text-center">
-                <p className={labelStyle}>Tiempo</p>
-                <p className="text-xs font-bold text-stone-600">{item.duration} min</p>
+                <p className="text-[8px] uppercase tracking-widest text-stone-400 font-bold">Tiempo</p>
+                <p className="text-xs font-bold text-stone-700 mt-0.5">{item.duration} min</p>
               </div>
               <div className="text-center">
-                <p className={labelStyle}>Inversión</p>
-                <p className="text-xs font-bold text-stone-600">${item.price}</p>
+                <p className="text-[8px] uppercase tracking-widest text-stone-400 font-bold">Inversión</p>
+                <p className="text-xs font-bold text-stone-700 mt-0.5">${item.price}</p>
               </div>
               <div className="text-center">
-                <p className={labelStyle}>Estado</p>
-                <div className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-md ${item.enabled ? 'text-[#2897A3] bg-[#2897A3]/5' : 'text-stone-300 bg-stone-50'}`}>
-                  {item.enabled ? 'Visible' : 'Oculto'}
+                <p className="text-[8px] uppercase tracking-widest text-stone-400 font-bold mb-0.5">Visibilidad</p>
+                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-stone-50 border border-stone-200/60">
+                  <div className={`h-1.5 w-1.5 rounded-full ${item.enabled ? 'bg-emerald-500 animate-pulse' : 'bg-stone-300'}`} />
+                  <span className={`text-[9px] font-bold uppercase tracking-wider ${item.enabled ? 'text-stone-700' : 'text-stone-400'}`}>
+                    {item.enabled ? 'Visible' : 'Oculto'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -240,15 +247,15 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
             <div className="flex items-center gap-2 pl-6 border-l border-stone-100">
               <button
                 onClick={() => setIsEditing(true)}
-                className="p-3 rounded-xl bg-stone-50 text-stone-400 hover:text-[#B5A447] hover:bg-[#B5A447]/10 transition-all"
-                title="Editar"
+                className="p-3 rounded-xl bg-stone-50 text-stone-400 hover:text-[#D4C363] hover:bg-stone-900 transition-all duration-300 cursor-pointer shadow-sm"
+                title="Editar Servicio"
               >
                 <PencilSquareIcon className="h-5 w-5" />
               </button>
               <button
-                onClick={() => confirm(`¿Eliminar definitivamente "${item.name}"?`) && mutateDelete(item.handle)}
-                className="p-3 rounded-xl bg-stone-50 text-stone-400 hover:text-red-500 hover:bg-red-50 transition-all"
-                title="Eliminar"
+                onClick={() => confirm(`¿Eliminar definitivamente el servicio "${item.name}"?`) && mutateDelete(item.handle)}
+                className="p-3 rounded-xl bg-stone-50 text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-all duration-300 cursor-pointer shadow-sm"
+                title="Eliminar Servicio"
               >
                 <TrashIcon className="h-5 w-5" />
               </button>

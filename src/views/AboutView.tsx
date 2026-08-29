@@ -37,7 +37,7 @@ export default function AboutView() {
         </h1>
 
         <p className="max-w-5xl mx-auto text-stone-700 text-xl sm:text-2xl md:text-3xl font-light italic leading-relaxed tracking-wide drop-shadow-sm">
-          "Le Cocom Spa nació no como un negocio, sino como un refugio. Un
+          "Le Cocom Spa nació como un refugio. Un
           espacio donde el tiempo se detiene y la conexión entre el cuerpo y el
           alma se vuelve la prioridad absoluta."
         </p>

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
+import { UserPlusIcon, ShieldCheckIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import type { RegisterFormData } from "../types/index.ts";
 import ErrorMessage from "../components/ErrorMessage";
 import api from "../config/axios";
@@ -13,6 +14,7 @@ export default function RegisterView() {
     password: "",
     password_confirmation: "",
     admin: false,
+    superAdmin: false,
   };
 
   const {
@@ -20,7 +22,7 @@ export default function RegisterView() {
     getValues,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({ defaultValues: initalValues });
 
   const handleRegister = async (formData: RegisterFormData) => {
@@ -35,36 +37,41 @@ export default function RegisterView() {
     }
   };
 
+  const labelStyle = "text-[9px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1 mb-1.5 block";
+  const inputStyle = "w-full bg-stone-50 border border-stone-200 px-4 py-3 rounded-2xl text-xs text-stone-700 focus:ring-2 focus:ring-[#2897A3]/20 focus:border-[#2897A3] outline-none transition-all placeholder:text-stone-300 font-medium";
+
   return (
-    <div className="max-w-xl mx-auto">
-      {/* Encabezado de la Sección */}
-      <header className="text-center mb-8 space-y-2">
-        <h1 className="text-3xl font-light tracking-[0.2em] text-stone-700 uppercase">
-          Crear <span className="font-serif italic text-[#2897A3] font-normal">Usuario</span>
+    <div className="max-w-2xl mx-auto space-y-8 animate-fadeIn">
+      {/* Encabezado */}
+      <header className="text-center space-y-3">
+        <div className="inline-block px-5 py-2 border border-stone-200/80 bg-white/60 backdrop-blur-md rounded-full shadow-sm">
+          <span className="text-xs uppercase tracking-[0.3em] text-[#D4C363] font-bold">
+            Gestión de Usuarios
+          </span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-light tracking-[0.15em] text-stone-800 uppercase">
+          Crear <span className="font-serif italic text-[#2897A3] font-normal">Cuenta</span>
         </h1>
-        <p className="text-stone-400 text-xs tracking-widest uppercase">
-          Gestión interna de accesos • Le Cocom Spa
+        <p className="text-stone-500 text-xs tracking-[0.2em] uppercase font-medium">
+          Acceso interno y credenciales • Le Cocom Spa
         </p>
       </header>
 
       <form
         onSubmit={handleSubmit(handleRegister)}
-        className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl shadow-stone-200/50 border border-stone-200/60 space-y-6"
+        className="bg-white p-8 sm:p-12 rounded-[2.5rem] shadow-xl shadow-stone-200/40 border border-stone-200/70 space-y-5"
         noValidate
       >
         {/* Campo: Nombre */}
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="name"
-            className="text-[10px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
-          >
+        <div>
+          <label htmlFor="name" className={labelStyle}>
             Nombre Completo
           </label>
           <input
             id="name"
             type="text"
             placeholder="Ej. Ana García"
-            className="w-full bg-stone-50 border border-stone-200 p-4 rounded-xl placeholder-stone-400 text-stone-700 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
+            className={inputStyle}
             {...register("name", {
               required: "El nombre es obligatorio",
             })}
@@ -72,87 +79,76 @@ export default function RegisterView() {
           {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
         </div>
 
-        {/* Campo: Email */}
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="email"
-            className="text-[10px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
-          >
-            E-mail
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="email@ejemplo.com"
-            className="w-full bg-stone-50 border border-stone-200 p-4 rounded-xl placeholder-stone-400 text-stone-700 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
-            {...register("email", {
-              required: "El email es obligatorio",
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "E-mail no válido",
-              },
-            })}
-          />
-          {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-        </div>
+        {/* Campo: Email y Handle */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="email" className={labelStyle}>
+              E-mail
+            </label>
+            <input
+              id="email"
+              type="email"
+              placeholder="email@ejemplo.com"
+              className={inputStyle}
+              {...register("email", {
+                required: "El email es obligatorio",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "E-mail no válido",
+                },
+              })}
+            />
+            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+          </div>
 
-        {/* Campo: Handle */}
-        <div className="flex flex-col space-y-2">
-          <label
-            htmlFor="handle"
-            className="text-[10px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
-          >
-            Tag de usuario (Handle)
-          </label>
-          <input
-            id="handle"
-            type="text"
-            placeholder="Ej. anagarcia (sin espacios)"
-            className="w-full bg-stone-50 border border-stone-200 p-4 rounded-xl placeholder-stone-400 text-stone-700 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
-            {...register("handle", {
-              required: "El tag de usuario es obligatorio",
-            })}
-          />
-          {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>}
+          <div>
+            <label htmlFor="handle" className={labelStyle}>
+              Tag de usuario (Handle)
+            </label>
+            <input
+              id="handle"
+              type="text"
+              placeholder="anagarcia"
+              className={inputStyle}
+              {...register("handle", {
+                required: "El tag de usuario es obligatorio",
+              })}
+            />
+            {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>}
+          </div>
         </div>
 
         {/* Campo: Password y Confirmación */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col space-y-2">
-            <label
-              htmlFor="password"
-              className="text-[10px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
-            >
-              Password
+          <div>
+            <label htmlFor="password" className={labelStyle}>
+              Contraseña
             </label>
             <input
               id="password"
               type="password"
               placeholder="••••••••"
-              className="w-full bg-stone-50 border border-stone-200 p-4 rounded-xl placeholder-stone-400 text-stone-700 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
+              className={inputStyle}
               {...register("password", {
                 required: "El password es obligatorio",
                 minLength: {
                   value: 6,
-                  message: "Password debe tener al menos 6 caracteres",
+                  message: "Debe tener al menos 6 caracteres",
                 },
               })}
             />
             {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
           </div>
 
-          <div className="flex flex-col space-y-2">
-            <label
-              htmlFor="password_confirmation"
-              className="text-[10px] uppercase tracking-[0.2em] text-stone-600 font-bold ml-1"
-            >
-              Confirmar
+          <div>
+            <label htmlFor="password_confirmation" className={labelStyle}>
+              Confirmar Contraseña
             </label>
             <input
               id="password_confirmation"
               type="password"
               placeholder="••••••••"
-              className="w-full bg-stone-50 border border-stone-200 p-4 rounded-xl placeholder-stone-400 text-stone-700 focus:outline-none focus:border-[#2897A3] focus:ring-1 focus:ring-[#2897A3] transition-all"
+              className={inputStyle}
               {...register("password_confirmation", {
                 required: "Confirmar es obligatorio",
                 validate: (value) =>
@@ -165,32 +161,63 @@ export default function RegisterView() {
           </div>
         </div>
 
-        {/* CAMPO: ROL ADMINISTRADOR (CHECKBOX/SWITCH) */}
-        <div className="pt-2">
-          <label className="relative flex items-center justify-between p-4 bg-stone-50 border border-stone-200 rounded-2xl cursor-pointer hover:bg-white transition-colors">
-            <div className="flex flex-col">
-              <span className="text-xs uppercase tracking-[0.2em] text-stone-800 font-bold">
-                Rol de Administrador
-              </span>
-              <span className="text-[10px] text-stone-400 tracking-wider">
-                Otorga permisos para gestionar servicios, promociones y usuarios.
-              </span>
-            </div>
-            <input
-              type="checkbox"
-              className="h-5 w-5 accent-[#2897A3] rounded border-stone-300 focus:ring-[#2897A3] cursor-pointer"
-              {...register("admin")}
-            />
-          </label>
+        {/* ROLES EN GRID PARALELA COMPACTA */}
+        <div className="pt-2 space-y-1.5">
+          <span className={labelStyle}>Permisos de Acceso</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            
+            {/* Admin */}
+            <label className="flex items-center justify-between p-3.5 bg-stone-50/80 border border-stone-200/80 rounded-2xl cursor-pointer hover:bg-stone-100/70 transition-colors">
+              <div className="flex items-center gap-2.5">
+                <ShieldCheckIcon className="h-4 w-4 text-[#2897A3] shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-[0.15em] text-stone-800 font-bold leading-tight">
+                    Admin
+                  </span>
+                  <span className="text-[9px] text-stone-400 font-medium">
+                    Servicios y promos
+                  </span>
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                className="h-4 w-4 accent-[#2897A3] rounded border-stone-300 cursor-pointer"
+                {...register("admin")}
+              />
+            </label>
+
+            {/* Super Admin */}
+            <label className="flex items-center justify-between p-3.5 bg-stone-50/80 border border-stone-200/80 rounded-2xl cursor-pointer hover:bg-stone-100/70 transition-colors">
+              <div className="flex items-center gap-2.5">
+                <SparklesIcon className="h-4 w-4 text-[#D4C363] shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-[11px] uppercase tracking-[0.15em] text-stone-800 font-bold leading-tight">
+                    Super Admin
+                  </span>
+                  <span className="text-[9px] text-stone-400 font-medium">
+                    Acceso total
+                  </span>
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                className="h-4 w-4 accent-[#D4C363] rounded border-stone-300 cursor-pointer"
+                {...register("superAdmin")}
+              />
+            </label>
+
+          </div>
         </div>
 
         {/* Botón Submit */}
-        <div className="pt-4">
+        <div className="pt-4 border-t border-stone-100">
           <button
             type="submit"
-            className="w-full bg-[#D4C363] hover:bg-stone-900 text-stone-950 hover:text-white p-4.5 rounded-2xl text-xs uppercase tracking-[0.25em] font-bold cursor-pointer transition-all duration-500 shadow-xl shadow-[#D4C363]/20 active:scale-[0.98]"
+            disabled={isSubmitting}
+            className="w-full py-4 bg-stone-900 text-white text-xs tracking-[0.25em] font-bold uppercase rounded-2xl hover:bg-[#D4C363] hover:text-stone-950 transition-all duration-500 shadow-xl active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer group disabled:bg-stone-300"
           >
-            Crear Nuevo Usuario
+            <UserPlusIcon className="h-4 w-4 text-white group-hover:text-stone-950 transition-colors" />
+            <span>{isSubmitting ? "Registrando..." : "Crear Nuevo Usuario"}</span>
           </button>
         </div>
       </form>

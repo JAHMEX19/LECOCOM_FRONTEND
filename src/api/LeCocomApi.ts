@@ -199,3 +199,39 @@ export async function getPromotionsClients() {
     }
   }
 }
+// --- GESTIÓN DE USUARIOS (SUPER ADMIN) ---
+
+export async function getAllUsers() {
+  try {
+    const { data } = await api.get<User[]>("/all-users");
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+    throw new Error("Error al obtener la lista de usuarios");
+  }
+}
+
+export async function updateUserRoles({
+  id,
+  admin,
+  superAdmin,
+}: {
+  id: string;
+  admin: boolean;
+  superAdmin: boolean;
+}) {
+  try {
+    const { data } = await api.patch<{ message: string }>(`/${id}/roles`, {
+      admin,
+      superAdmin,
+    });
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+    throw new Error("Error al actualizar los roles del usuario");
+  }
+}

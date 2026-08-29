@@ -41,7 +41,7 @@ export default function Header() {
         
         {/* TOP BAR OPCIONAL - INFORMACIÓN DE CONTACTO RÁPIDO */}
         <div className="bg-stone-900 text-stone-300 py-2 px-6 sm:px-12 lg:px-20 text-[11px] tracking-[0.2em] uppercase font-light hidden sm:flex justify-between items-center border-b border-stone-800">
-          <span>Ciudad del Carmen, Camp. — Santuario de Bienestar</span>
+          <span>Ciudad del Carmen, Camp.</span>
           <Link to="https://wa.me/529381514024?text=Hola,%20me%20gustar%C3%ADa%20agendar%20una%20cita" className="flex items-center gap-2 hover:text-[#D4C363] transition-colors">
             <PhoneIcon className="h-3.5 w-3.5 text-[#2897A3]" />
             <span>+52 938 151 4024</span>

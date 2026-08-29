@@ -35,7 +35,7 @@ export default function HomeView() {
     {/* Insignia / Badge con contraste mejorado */}
     <div className="inline-block px-6 py-2.5 sm:px-8 sm:py-3 border border-white/25 rounded-full backdrop-blur-xl bg-black/40 shadow-xl">
       <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-stone-100 font-semibold drop-shadow-sm">
-        Un Pausa para la Armonía
+        Una Pausa para la Armonía
       </p>
     </div>
 

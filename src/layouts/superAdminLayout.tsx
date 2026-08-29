@@ -3,7 +3,7 @@ import { getUser } from "../api/LeCocomApi";
 import { Navigate, Outlet } from "react-router-dom";
 import LoadingHeader from "../components/LoadingHeader";
 
-export default function AdminLayout() {
+export default function SuperAdminLayout() {
   const { data: user, isLoading, isError } = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
@@ -17,10 +17,10 @@ export default function AdminLayout() {
     return <Navigate to="/user/login" replace />;
   }
 
-  // Permite acceso a Admin o SuperAdmin
-  if (!user.admin && !user.superAdmin) {
-    console.log("Acceso denegado: Se requieren permisos de Administrador.");
-    return <Navigate to="/" replace />;
+  // Exclusivo para SuperAdmin
+  if (!user.superAdmin) {
+    console.log("Acceso denegado: Se requieren permisos de Super Administrador.");
+    return <Navigate to="/auth/profile" replace />;
   }
 
   return <Outlet context={{ user }} />;
