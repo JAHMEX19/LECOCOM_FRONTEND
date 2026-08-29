@@ -203,7 +203,7 @@ export async function getPromotionsClients() {
 
 export async function getAllUsers() {
   try {
-    const { data } = await api.get<User[]>("/all-users");
+    const { data } = await api.get<User[]>("/user/all-users");
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -223,7 +223,7 @@ export async function updateUserRoles({
   superAdmin: boolean;
 }) {
   try {
-    const { data } = await api.patch<{ message: string }>(`/${id}/roles`, {
+    const { data } = await api.patch<{ message: string }>(`/user/${id}/roles`, {
       admin,
       superAdmin,
     });
