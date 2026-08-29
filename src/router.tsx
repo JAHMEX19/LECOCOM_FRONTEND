@@ -8,7 +8,7 @@ import Headers from './layouts/Headers';
 
 import ClientLayout from './layouts/ClientLayout';
 import AdminLayout from './layouts/AdminLayout';
-import SuperAdminLayout from './layouts/superAdminLayout';
+import SuperAdminLayout from './layouts/SuperAdminLayout';
 
 import WellnessView from './components/WellnessView';
 import AdminView from './components/FormServices'; // Gestión de Servicios Admin
