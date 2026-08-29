@@ -11,18 +11,18 @@ import AdminLayout from './layouts/AdminLayout';
 import SuperAdminLayout from './layouts/superAdminLayout';
 
 import WellnessView from './components/WellnessView';
-import AdminView from './components/FormServices';
+import AdminView from './components/FormServices'; // Gestión de Servicios Admin
+import FormPromotionsView from './components/FormPromotions'; // Gestión de Promociones Admin
 import ServiciosView from './views/ServiciosView';
 import FormProfileView from './components/FormProfileView';
-import PromotionsView from './views/PromotionsView';
+import PromotionsView from './views/PromotionsView'; // Vista Pública de Promociones
 import UsersManagementView from './components/UsersManagmentView';
-{/* Rutas Públicas */}
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rutas Públicas */}
+        {/* Rutas Públicas (Catálogo Cliente) */}
         <Route element={<Headers />}>
           <Route path="/" element={<HomeView />} />
           <Route path="/nosotros" element={<AboutView />} />
@@ -44,9 +44,10 @@ export default function Router() {
           {/* Rutas protegidas para Admin y SuperAdmin */}
           <Route element={<AdminLayout />}>
             <Route path="admin/servicios" element={<AdminView />} />
-            <Route path="admin/promociones" element={<AdminView />} />
+            {/* 👈 Corregido: Ahora renderiza la gestión de promociones en vez de FormServices */}
+            <Route path="admin/promociones" element={<FormPromotionsView />} />
 
-            {/* Ruta exclusiva para SuperAdmin */}
+            {/* Rutas exclusivas para SuperAdmin */}
             <Route element={<SuperAdminLayout />}>
               <Route path="admin/users" element={<UsersManagementView />} />
               <Route path="admin/register" element={<RegisterView />} />
