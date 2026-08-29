@@ -9,8 +9,6 @@ import Headers from './layouts/Headers';
 import ClientLayout from './layouts/ClientLayout';
 import AdminLayout from './layouts/AdminLayout';
 
-import SuperAdminLayout from './layouts/SuperAdminLayout';
-
 import WellnessView from './components/WellnessView';
 import AdminView from './components/FormServices'; // Gestión de Servicios Admin
 import FormPromotionsView from './components/FormPromotions'; // Gestión de Promociones Admin
@@ -18,6 +16,8 @@ import ServiciosView from './views/ServiciosView';
 import FormProfileView from './components/FormProfileView';
 import PromotionsView from './views/PromotionsView'; // Vista Pública de Promociones
 import UsersManagementView from './components/UsersManagmentView';
+import SuperAdminLayout from './layouts/SuperAdminLayout';
+
 
 export default function Router() {
   return (
