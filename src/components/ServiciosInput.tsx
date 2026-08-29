@@ -150,6 +150,26 @@ export default function ServiciosInput({ item }: ServiciosInputProps) {
                 />
               </div>
 
+              {/* 🟢 NUEVO CAMPO: Categoría (Group) */}
+              <div className="md:col-span-6">
+                <label className={labelStyle}>Categoría</label>
+                <select
+                  {...register("group", { required: true })}
+                  className={`${inputEditStyle} appearance-none cursor-pointer`}
+                  disabled={isUpdating}
+                >
+                  <option value="terapéuticos">Masajes Terapéuticos</option>
+                  <option value="personalizados">Masajes Personalizados</option>
+                  <option value="corpo-facial holístico">Masaje Corpo-Facial Holístico</option>
+                  <option value="reductivos">Masajes Reductivos</option>
+                  <option value="combinados">Masajes Combinados</option>
+                  <option value="faciales">Faciales</option>
+                  <option value="masaje facial">Masaje facial</option>
+                  <option value="exfoliaciones">Exfoliaciones Corpo Facial</option>
+                  <option value="otros">Otros</option>
+                </select>
+              </div>
+
               <div className="md:col-span-3">
                 <label className={labelStyle}>Duración (Minutos)</label>
                 <input

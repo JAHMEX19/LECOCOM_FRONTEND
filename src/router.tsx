@@ -49,7 +49,6 @@ export default function Router() {
           {/* Rutas protegidas para Admin y SuperAdmin */}
           <Route element={<AdminLayout />}>
             <Route path="admin/servicios" element={<AdminView />} />
-            {/* 👈 Corregido: Ahora renderiza la gestión de promociones en vez de FormServices */}
             <Route path="admin/promociones" element={<FormPromotionsView />} />
 
             {/* Rutas exclusivas para SuperAdmin */}
