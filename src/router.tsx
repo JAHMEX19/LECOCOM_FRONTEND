@@ -16,6 +16,7 @@ import ServiciosView from './views/ServiciosView';
 import FormProfileView from './components/FormProfileView';
 import PromotionsView from './views/PromotionsView';
 import UsersManagementView from './components/UsersManagmentView';
+{/* Rutas Públicas */}
 
 export default function Router() {
   return (
