@@ -10,11 +10,9 @@
 
   Le Cocom Spa es una solución web Full-Stack desarrollada para optimizar la presencia digital de la marca y simplificar la programación de citas. La plataforma permite a los usuarios explorar los tratamientos disponibles, consultar precios y agendar sus sesiones de forma rápida e intuitiva, reduciendo la carga administrativa manual del negocio.
 
- ![Client View] <img width="1272" height="878" alt="LeCocom_1" src="https://github.com/user-attachments/assets/0191e9c5-9479-4e97-9536-e92cfbd9e16c" />
-
- ![Admin View] <img width="1252" height="886" alt="LeCocom_2" src="https://github.com/user-attachments/assets/eb0ce22e-b662-493a-a91f-a17a40585533" />
-
-
+| Vista de cliente | Vista de administrador |
+| :---: | :---: |
+| <img width="1272" height="878" alt="LeCocom_1" src="https://github.com/user-attachments/assets/0191e9c5-9479-4e97-9536-e92cfbd9e16c" width="400" /> | <img width="1252" height="886" alt="LeCocom_2" src="https://github.com/user-attachments/assets/eb0ce22e-b662-493a-a91f-a17a40585533" width="400"/>
 
 ---
 
