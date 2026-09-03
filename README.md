@@ -1,73 +1,30 @@
-# React + TypeScript + Vite
+# Le Cocom Spa – Platform & Appointment Booking System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Plataforma web integral diseñada para la gestión de servicios, catálogo interactivo y agenda de citas para clientes.
 
-Currently, two official plugins are available:
+🌐 **Sitio Web en Vivo:** [https://lecocomspa.com](https://lecocomspa.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📌 Sobre el Proyecto
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+  Le Cocom Spa es una solución web Full-Stack desarrollada para optimizar la presencia digital de la marca y simplificar la programación de citas. La plataforma permite a los usuarios explorar los tratamientos disponibles, consultar precios y agendar sus sesiones de forma rápida e intuitiva, reduciendo la carga administrativa manual del negocio.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Frontend:** React.js, Tailwind CSS / Styled Components, HTML5, JavaScript (ES6+)
+* **Backend:** Node.js, Express.js (RESTful APIs)
+* **Base de Datos:** MongoDB (Gestión de usuarios, citas y servicios)
+* **Control de Versiones & Tools:** Git, GitHub, Postman
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## ✨ Características Principales
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* 📖 **Catálogo Dinámico de Servicios:** Presentación clara de tratamientos, duraciones y costos.
+* 📱 **Diseño Responsive:** Interfaz adaptada y optimizada para dispositivos móviles, tablets y escritorio.
+* 🔒 **Modulo de administrador: ** Para la gestión de servicios , promociones y usuarios.
+* 📅 **Módulo de Reserva de Citas:** Sistema para la selección de fechas, horarios disponibles y registro de información del cliente. (Work in progress)
+---
